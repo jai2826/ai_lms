@@ -32,6 +32,7 @@ const TeacherIdPage = async ({ params }: { params: { teacherId: string } }) => {
     },
     include: {
       courses: true,
+      
     },
   });
 
@@ -48,7 +49,7 @@ const TeacherIdPage = async ({ params }: { params: { teacherId: string } }) => {
     await navigator.clipboard.writeText(teacher.userId);
   };
 
-  const requiredFields = [teacher.name, teacher.email, teacher.phoneNumber];
+  const requiredFields = [teacher.name, teacher.email, teacher.phone];
 
   const totalFields = requiredFields.length;
   const completedFields = requiredFields.filter(Boolean).length;

@@ -41,7 +41,7 @@ export const PhoneNumberForm = ({
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      phoneNumber: initialData?.phoneNumber || '',
+      phoneNumber: initialData?.phone || '',
     },
   });
   const [isEditing, setIsEditing] = useState(false);
@@ -79,10 +79,10 @@ export const PhoneNumberForm = ({
         <p
           className={cn(
             'text-sm mt-2 ',
-            !initialData.phoneNumber && 'text-slate-500 italic'
+            !initialData.phone && 'text-slate-500 italic'
           )}
         >
-          {initialData.phoneNumber || 'No Phone Number'}
+          {initialData.phone || 'No Phone Number'}
         </p>
       )}
       {isEditing && (

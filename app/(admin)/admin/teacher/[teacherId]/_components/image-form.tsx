@@ -19,7 +19,7 @@ interface ImageFormProps {
 }
 
 const formSchema = z.object({
-  coverImageUrl: z.string().min(1, {
+  image: z.string().min(1, {
     message: 'Image is required',
   }),
 });
@@ -30,17 +30,15 @@ export const ImageForm = ({ initialData, teacherId }: ImageFormProps) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      coverImageUrl: initialData?.coverImageUrl || '',
+      image: initialData?.image || '',
     },
   });
   const [isEditing, setIsEditing] = useState(false);
 
-  const { isSubmitting, isValid } = form.formState;
-
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    console.log('error1')
+    // console.log('error1')
     try {
-      console.log('error2')
+      // console.log('error2')
       await axios.patch(`/api/teacher/${teacherId}`, values);
       toast.success('Teacher details updated');
       toggleEdit();
@@ -57,13 +55,13 @@ export const ImageForm = ({ initialData, teacherId }: ImageFormProps) => {
         Teacher Image
         <Button onClick={toggleEdit} variant="ghost">
           {isEditing && <>Cancel</>}
-          {!isEditing && !initialData.coverImageUrl && (
+          {!isEditing && !initialData.image && (
             <>
               <PlusCircle className="h-4 w-4 mr-2" />
               Add an image
             </>
           )}
-          {!isEditing && initialData.coverImageUrl && (
+          {!isEditing && initialData.image && (
             <>
               <Pencil className="h-4 w-4 mr-2 " />
               Edit Image
@@ -72,7 +70,7 @@ export const ImageForm = ({ initialData, teacherId }: ImageFormProps) => {
         </Button>
       </div>
       {!isEditing &&
-        (!initialData.coverImageUrl ? (
+        (!initialData.image ? (
           <div className="flex items-center justify-center h-60 bg-slate-200 rounded-md">
             <ImageIcon className="h-10 w-10" />
           </div>
@@ -82,7 +80,7 @@ export const ImageForm = ({ initialData, teacherId }: ImageFormProps) => {
               alt="Upload"
               fill
               className="object-cover rounded-md"
-              src={initialData.coverImageUrl}
+              src={initialData.image}
             />
           </div>
         ))}
@@ -92,13 +90,13 @@ export const ImageForm = ({ initialData, teacherId }: ImageFormProps) => {
             endpoint="teacherImage"
             onChange={(url) => {
               if (url) {
-                onSubmit({ coverImageUrl: url });
+                onSubmit({ image: url });
               }
             }}
           />
 
           <div className="text-xs text-muted-foreground mt-4">
-            16:9 aspect ration recommended
+            1:1 aspect ration recommended
           </div>
         </div>
       )}
