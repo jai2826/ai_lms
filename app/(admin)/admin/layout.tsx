@@ -1,4 +1,4 @@
-import { auth, useUser } from '@clerk/nextjs';
+
 import AdminNavbar from './_components/admin-navbar';
 import { AdminSidebar } from './_components/admin-sidebar';
 import { redirect, usePathname } from 'next/navigation';
