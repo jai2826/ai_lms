@@ -119,6 +119,7 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
             title={course.title}
             courseId={params.courseId}
             playbackId={course.muxData?.playbackId!}
+            src={course.introUrl!}
           />
         </div>
         <div>

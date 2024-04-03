@@ -76,6 +76,7 @@ model Course {
 
   introUrl String?        @db.Text
   muxData  MuxDataCourse?
+  
 
   teacherId String
   teacher   Teacher? @relation(fields: [teacherId], references: [id], onDelete: Cascade)

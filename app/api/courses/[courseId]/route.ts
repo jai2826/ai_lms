@@ -90,36 +90,36 @@ export async function PATCH(
       },
     });
 
-    if (values.introUrl) {
-      const existingMuxData = await db.muxDataCourse.findFirst({
-        where: {
-          courseId: params.courseId,
-        },
-      });
+    // if (values.introUrl) {
+    //   const existingMuxData = await db.muxDataCourse.findFirst({
+    //     where: {
+    //       courseId: params.courseId,
+    //     },
+    //   });
 
-      if (existingMuxData) {
-        await Video.Assets.del(existingMuxData.assetId);
-        await db.muxDataCourse.delete({
-          where: {
-            id: existingMuxData.id,
-          },
-        });
-      }
+    //   if (existingMuxData) {
+    //     await Video.Assets.del(existingMuxData.assetId);
+    //     await db.muxDataCourse.delete({
+    //       where: {
+    //         id: existingMuxData.id,
+    //       },
+    //     });
+    //   }
 
-      const asset = await Video.Assets.create({
-        input: values.introUrl,
-        playback_policy: 'public',
-        test: false,
-      });
+    //   const asset = await Video.Assets.create({
+    //     input: values.introUrl,
+    //     playback_policy: 'public',
+    //     test: false,
+    //   });
 
-      await db.muxDataCourse.create({
-        data: {
-          courseId: params.courseId,
-          assetId: asset.id,
-          playbackId: asset.playback_ids?.[0]?.id,
-        },
-      });
-    }
+    //   await db.muxDataCourse.create({
+    //     data: {
+    //       courseId: params.courseId,
+    //       assetId: asset.id,
+    //       playbackId: asset.playback_ids?.[0]?.id,
+    //     },
+    //   });
+    // }
 
     return NextResponse.json(course);
   } catch (error) {

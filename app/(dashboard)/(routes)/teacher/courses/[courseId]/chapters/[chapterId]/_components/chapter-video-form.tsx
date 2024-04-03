@@ -1,8 +1,8 @@
 'use client';
 
+import { CourseVideoPlayer } from '@/app/(course)/courses/[courseId]/_components/course-video-player';
 import { FileUpload } from '@/components/file-upload';
 import { Button } from '@/components/ui/button';
-import MuxPlayer from '@mux/mux-player-react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Chapter, MuxData } from '@prisma/client';
 import axios from 'axios';
@@ -43,13 +43,9 @@ export const ChapterVideoForm = ({
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       await axios.patch(
-        `/api/upload`,
+        `/api/courses/${courseId}/chapters/${chapterId}`,
         values
       );
-      // await axios.patch(
-      //   `/api/courses/${courseId}/chapters/${chapterId}`,
-      //   values
-      // );
       toast.success('Chapter updated');
       toggleEdit();
       router.refresh();
@@ -86,7 +82,14 @@ export const ChapterVideoForm = ({
           </div>
         ) : (
           <div className="relative aspect-video mt-2">
-            <MuxPlayer playbackId={initialData?.muxData?.playbackId || ''} />
+            {/* <MuxPlayer playbackId={initialData?.muxData?.playbackId || ''} /> */}
+            {/* Here i am using custom CourseVideoPlayer instead of Chapter's VideoPLayer cause this has less conditions */}
+            <CourseVideoPlayer
+              courseId={initialData.courseId}
+              title={initialData.title}
+              playbackId={initialData.muxData?.playbackId!}
+              src={initialData.videoUrl!}
+            />
           </div>
         ))}
       {isEditing && (

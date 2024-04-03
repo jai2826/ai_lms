@@ -1,8 +1,8 @@
 import Mux from '@mux/mux-node';
 import { NextResponse } from 'next/server';
 
-import { db } from '@/lib/db';
 import { auth } from '@/auth';
+import { db } from '@/lib/db';
 
 const { Video } = new Mux(
   process.env.MUX_TOKEN_ID!,
@@ -43,22 +43,22 @@ export async function DELETE(
       return new NextResponse('Not Found', { status: 404 });
     }
 
-    if (chapter.videoUrl) {
-      const existingMuxData = await db.muxData.findFirst({
-        where: {
-          chapterId: params.chapterId,
-        },
-      });
+    // if (chapter.videoUrl) {
+    //   const existingMuxData = await db.muxData.findFirst({
+    //     where: {
+    //       chapterId: params.chapterId,
+    //     },
+    //   });
 
-      if (existingMuxData) {
-        await Video.Assets.del(existingMuxData.assetId);
-        await db.muxData.delete({
-          where: {
-            id: existingMuxData.id,
-          },
-        });
-      }
-    }
+    //   if (existingMuxData) {
+    //     await Video.Assets.del(existingMuxData.assetId);
+    //     await db.muxData.delete({
+    //       where: {
+    //         id: existingMuxData.id,
+    //       },
+    //     });
+    //   }
+    // }
 
     const deletedChapter = await db.chapter.delete({
       where: {
@@ -126,38 +126,38 @@ export async function PATCH(
       },
     });
 
-    if (values.videoUrl) {
-      const existingMuxData = await db.muxData.findFirst({
-        where: {
-          chapterId: params.chapterId,
-        },
-      });
+    // if (values.videoUrl) {
+    //   const existingMuxData = await db.muxData.findFirst({
+    //     where: {
+    //       chapterId: params.chapterId,
+    //     },
+    //   });
 
-      if (existingMuxData) {
-        await Video.Assets.del(existingMuxData.assetId);
-        await db.muxData.delete({
-          where: {
-            id: existingMuxData.id,
-          },
-        });
-      }
-      // console.log("two")
+    //   if (existingMuxData) {
+    //     await Video.Assets.del(existingMuxData.assetId);
+    //     await db.muxData.delete({
+    //       where: {
+    //         id: existingMuxData.id,
+    //       },
+    //     });
+    //   }
+    //   // console.log("two")
 
-      const asset = await Video.Assets.create({
-        input: values.videoUrl,
-        playback_policy: 'public',
-        test: false,
-      });
-      // console.log("three")
+    //   const asset = await Video.Assets.create({
+    //     input: values.videoUrl,
+    //     playback_policy: 'public',
+    //     test: false,
+    //   });
+    //   // console.log("three")
 
-      await db.muxData.create({
-        data: {
-          chapterId: params.chapterId,
-          assetId: asset.id,
-          playbackId: asset.playback_ids?.[0]?.id,
-        },
-      });
-    }
+    //   await db.muxData.create({
+    //     data: {
+    //       chapterId: params.chapterId,
+    //       assetId: asset.id,
+    //       playbackId: asset.playback_ids?.[0]?.id,
+    //     },
+    //   });
+    // }
     // console.log("four")
 
     return NextResponse.json(chapter);

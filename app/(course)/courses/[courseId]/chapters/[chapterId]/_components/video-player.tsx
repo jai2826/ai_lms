@@ -18,6 +18,7 @@ interface VideoPlayerProps {
   isLocked: boolean;
   completeOnEnd: boolean;
   title: string;
+  src: string
 }
 export const VideoPlayer = ({
   chapterId,
@@ -26,6 +27,7 @@ export const VideoPlayer = ({
   isLocked,
   playbackId,
   title,
+  src,
   nextChapterId,
 }: VideoPlayerProps) => {
   const [isReady, setIsReady] = useState(false);
@@ -84,9 +86,7 @@ export const VideoPlayer = ({
           onCanPlay={() => setIsReady(true)}
           onEnded={onEnd}
           autoPlay
-          src={
-            'https://utfs.io/f/d828a293-99c5-4a47-a4c2-786652744512-t5rn3i.mp4'
-          }
+          src={src}
         />
       )}
     </div>

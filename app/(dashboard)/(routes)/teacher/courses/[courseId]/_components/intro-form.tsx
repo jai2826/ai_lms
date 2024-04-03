@@ -1,5 +1,6 @@
 'use client';
 
+import Video from 'next-video';
 import * as z from 'zod';
 import axios from 'axios';
 import { Pencil, PlusCircle, ImageIcon, VideoIcon } from 'lucide-react';
@@ -13,8 +14,10 @@ import { Button } from '@/components/ui/button';
 import { FileUpload } from '@/components/file-upload';
 import { onSubmitUpdateData } from '@/lib/update-data';
 import MuxPlayer from '@mux/mux-player-react';
+import { cn } from '@/lib/utils';
+import { CourseVideoPlayer } from '@/app/(course)/courses/[courseId]/_components/course-video-player';
 
-interface ImageFormProps {
+interface IntroFormProps {
   initialData: Course & {
     muxData: MuxDataCourse;
   };
@@ -27,9 +30,9 @@ const formSchema = z.object({
   }),
 });
 
-export const IntroForm = ({ initialData, courseId }: ImageFormProps) => {
+export const IntroForm = ({ initialData, courseId }: IntroFormProps) => {
   const [isEditing, setIsEditing] = useState(false);
-
+  const [isReady, setIsReady] = useState(false);
   const toggleEdit = () => setIsEditing((current) => !current);
 
   const router = useRouter();
@@ -74,7 +77,13 @@ export const IntroForm = ({ initialData, courseId }: ImageFormProps) => {
           </div>
         ) : (
           <div className="relative aspect-video mt-2">
-            <MuxPlayer playbackId={initialData?.muxData?.playbackId || ''} />
+            {/* <MuxPlayer playbackId={initialData?.muxData?.playbackId || ''} /> */}
+            <CourseVideoPlayer
+              title={initialData.title}
+              courseId={courseId}
+              playbackId={initialData.muxData?.playbackId!}
+              src={initialData.introUrl!}
+            />
           </div>
         ))}
       {isEditing && (

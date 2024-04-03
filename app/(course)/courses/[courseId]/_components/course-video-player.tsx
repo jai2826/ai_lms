@@ -1,9 +1,8 @@
 'use client';
 
 import { cn } from '@/lib/utils';
-import MuxPlayer from '@mux/mux-player-react';
+import { Loader2 } from 'lucide-react';
 import Video from 'next-video';
-import { Loader2, Lock } from 'lucide-react';
 import { useState } from 'react';
 
 interface CourseVideoPlayerProps {
@@ -33,9 +32,7 @@ export const CourseVideoPlayer = ({
         className={cn(!isReady && 'hidden')}
         onCanPlay={() => setIsReady(true)}
         autoPlay
-        src={
-          'https://utfs.io/f/d828a293-99c5-4a47-a4c2-786652744512-t5rn3i.mp4'
-        }
+        src={src}
       />
     </div>
   );
