@@ -8,6 +8,7 @@ import { Loader2, Lock } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
+import Video from 'next-video';
 
 interface VideoPlayerProps {
   playbackId: string;
@@ -45,7 +46,7 @@ export const VideoPlayer = ({
       }
       toast.success('Progress Updated');
       router.refresh();
-      
+
       if (nextChapterId) {
         router.push(`/courses/${courseId}/chapters/${nextChapterId}`);
         router.refresh();
@@ -69,13 +70,23 @@ export const VideoPlayer = ({
         </div>
       )}
       {!isLocked && (
-        <MuxPlayer
+        // <MuxPlayer
+        //   title={title}
+        //   className={cn(!isReady && 'hidden')}
+        //   onCanPlay={() => setIsReady(true)}
+        //   onEnded={onEnd}
+        //   autoPlay
+        //   playbackId={playbackId}
+        // />
+        <Video
           title={title}
           className={cn(!isReady && 'hidden')}
           onCanPlay={() => setIsReady(true)}
           onEnded={onEnd}
           autoPlay
-          playbackId={playbackId}
+          src={
+            'https://utfs.io/f/d828a293-99c5-4a47-a4c2-786652744512-t5rn3i.mp4'
+          }
         />
       )}
     </div>

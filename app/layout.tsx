@@ -5,6 +5,7 @@ import { ToastProvider } from '@/components/providers/toaster-provider';
 import { ConfettiProvider } from '@/components/providers/confetti-provider';
 import { SessionProvider } from 'next-auth/react';
 import { auth } from '@/auth';
+import {Loader} from '@/components/top-loading-bar';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
@@ -24,6 +25,7 @@ export default async function RootLayout({
       <html lang="en">
         <body className={inter.className}>
           <>
+            <Loader/>
             <ConfettiProvider />
             <ToastProvider />
             {children}

@@ -1,5 +1,6 @@
 'use client';
 
+import { useLoader } from '@/hooks/useloader';
 import { cn } from '@/lib/utils';
 import { LucideIcon } from 'lucide-react';
 import { usePathname, useRouter } from 'next/navigation';
@@ -17,6 +18,7 @@ export const AdminSidebarItem = ({
 }: SidebarItemProps) => {
   const pathname = usePathname();
   const router = useRouter();
+  const loader = useLoader();
 
   const isActive =
     (pathname === '/admin' && href === '/admin/') ||
@@ -24,8 +26,11 @@ export const AdminSidebarItem = ({
     pathname?.startsWith(`${href}/`);
 
   const onClick = () => {
+    loader.setValue(25);
     router.push(href);
-    router.refresh()
+    loader.setValue(50);
+    router.refresh();
+    loader.setValue(100);
   };
 
   return (

@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "ascendant-study-419206",
+  "private_key_id": "880f26033b2c96bfbfe6e6014f7b6cdf68197c40",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQC1zPDx1hxSYZaq\nNciBojBRMxr7/K7EV/HkXkCaxXCltFYbRow8r6wV1bWZv1+3kOBtC/dLmQLzMnzk\n9un1omDex6Z83IG+Vo6OZT9RsdCbXZWcukcMN1UjOkYNYYkTjxOZwP6QZNOeRtYU\nBGQBh7LLTeNK7kMxovy4+NQqYjriMnh+z8w9L3d6LMMO0wxftyEIeaKGzx3sYKp+\nkisBcG8u8NIECVG/GbUWQSa5EuMygY10/vcQFoJyA1iKlo3rEU+7wz7vDALmxm6o\nxrswOG8kY+vh7rk2xZIC8FefbWzpz5cB1rzyRDkVTcO3qf3sYKXA8gprfeAJRSg0\nnwHmXywLAgMBAAECggEAO4Wi6XrxgONkocvEHvVMHnm9/vym96/Xia52NnYoQIh/\nnKSHa6MUk32J3JG0s/QiFnHRgJXTSm6gR5Kz3PFSB/6T+tNzQy8xs1tg1M2EACou\nvsaaVlyTalo870qcx6OThkaS0hHA21RT6O/bEkksd7XDkhfaNhkn5yPIyyuoHcBd\nH9eE0RZNv0QRv29IadxM9I+xrWA5VpEyYLy3h/Z0NPEg2xgKanjDbLqD2OD74Yvw\nY5F0F/N0dcjZLea1iLW3imaCgSoGGzp41+CFqaXBOkSEVCqPMgu147FSH2qrFgYG\nA8Z9iKaPh4JrmhP8m4SqcS8kpuIwQ6pnymDhjjhOaQKBgQDhMBbq6niP59cvW2HD\nxZ8Xa/de5VwiG6FIKUQbPksQNnNANIrsM2+hheq4ytAJThXahuDxPM6s6T6IDC5A\nLhr7CNZ0w0Gbonk+dKJ+mDv7rs+cPMUK0IfS202lsamRksKRBgjrB+zbaiWJcePT\nTwO2ySfxZ5gj8WTpwop95KVcPQKBgQDOrRNU+TIp/ug3/pgxHs3UdgxKCWRM2ieW\ntdwts1mH1D2ZTOl1On8plRAdNsFC4JfR6JJBy/v8IK40tz9N2jm/wMCQMOoi3UKI\nf+jyJ7lRUyyBdc+HC1RPBiSl3qzP9jHszM1pIAp1Ir2Tl8F7PL5ruwG7sR+GpRTU\nYg+Z1sbF5wKBgEVrGLWEYHQkST6tEf9S7Y8/1jsnw3Y0REzFg9xOIL+3uWGikOzt\nkk0dxlT/GJC1xKDgEXnsf93n7UHtV1irnd+jQtEt3AzJUk0BkZIrBdq5cgC87xU9\nYZGLz2zzzs00i8w/KwKhJ9Af8cBkHpJmekOf0TNm9wylfrFdKmpS0PMVAoGBAKcA\nO0rCQcKlc0crthaa6X7wFGYOyLlA3hRtxwg2j/Wtjki9WTecmPwksuyoPemoSYUY\nBHaeOXM1hQ6bs89Ysqk7O15H6Clb2FMr6DMj3h7UsnW5mINqqClisWJGWCWCrjzG\nEIUNmuWjuMP2MCVApC2w4mmjafIGmpoy0qBgaCWpAoGBALbwMsdbHMTB6wKeJ1k/\nptI89TjlrODg+NFaIVYK2CFkmLZuCG1rvkPNbfjaaNHtJDHIBw1UsbfnEFJqVFvc\ncyVJ2ikQdu0qAKRWmYS42NLqE6f9BBCbCCUjOZvCEpbmlV6UiH2u3ftv8HPICmQo\nEnc2caxxogHvaWzVMEbBYsZG\n-----END PRIVATE KEY-----\n",
+  "client_email": "jai-lakhmani@ascendant-study-419206.iam.gserviceaccount.com",
+  "client_id": "102746935680721732740",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/jai-lakhmani%40ascendant-study-419206.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

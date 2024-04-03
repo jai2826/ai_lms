@@ -2,7 +2,6 @@
 
 import { ConfirmModal } from '@/components/modals/confirm-modal';
 import { Button } from '@/components/ui/button';
-import { useConfettiStore } from '@/hooks/useConfettiStore';
 import axios from 'axios';
 import { Check, Copy, Trash } from 'lucide-react';
 import { useRouter } from 'next/navigation';
