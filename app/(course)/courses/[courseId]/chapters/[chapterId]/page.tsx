@@ -1,15 +1,14 @@
 import { getChapter } from '@/actions/get-chapters';
-import { Banner } from '@/components/banner';
 import { auth } from '@/auth';
-import { redirect } from 'next/navigation';
-import { VideoPlayer } from './_components/video-player';
-import { CourseEnrollButton } from './_components/course-enroll-button';
-import { Separator } from '@/components/ui/separator';
+import { Banner } from '@/components/banner';
 import { Preview } from '@/components/preview';
+import { Separator } from '@/components/ui/separator';
 import { ArrowLeft, File } from 'lucide-react';
-import { CourseProgressButton } from './_components/course-progress-button';
-import { useSession } from 'next-auth/react';
 import Link from 'next/link';
+import { redirect } from 'next/navigation';
+import { CourseEnrollButton } from './_components/course-enroll-button';
+import { CourseProgressButton } from './_components/course-progress-button';
+import { VideoPlayer } from './_components/video-player';
 
 const ChapterIdPage = async ({
   params,

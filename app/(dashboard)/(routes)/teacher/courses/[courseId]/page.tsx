@@ -26,6 +26,7 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
   const session = await auth();
   const userId = session?.user.id;
 
+  console.log(userId)
   if (!userId) {
     return redirect('/');
   }

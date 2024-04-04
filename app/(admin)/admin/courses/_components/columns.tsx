@@ -1,19 +1,12 @@
 'use client';
+import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { formatPrice } from '@/lib/format';
+import { cn } from '@/lib/utils';
 import { Chapter, Course, Purchase } from '@prisma/client';
 import { ColumnDef } from '@tanstack/react-table';
-import { ArrowUpDown, Copy, MoreHorizontal, Pencil, Trash } from 'lucide-react';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import Link from 'next/link';
-import DeleteAction from './actions/delete-action';
-import { Badge } from '@/components/ui/badge';
-import { cn } from '@/lib/utils';
-import { formatPrice } from '@/lib/format';
+import { ArrowUpDown } from 'lucide-react';
+import EditAction from './actions/edit-action';
 
 type FullCourse = Course & {
   chapters: Chapter[];
@@ -79,7 +72,7 @@ export const columns: ColumnDef<FullCourse>[] = [
       // console.log(courseCount)
 
       return (
-        <Badge className={cn('bg-white text-black ml-5')}>
+        <Badge className={cn('bg-white text-black ml-5 ')}>
           {chaptersCount}
         </Badge>
       );
@@ -102,31 +95,20 @@ export const columns: ColumnDef<FullCourse>[] = [
       const purchase = row.getValue('purchases');
 
       // @ts-ignore
-      return purchase.length
+      return purchase.length;
     },
   },
   {
     id: 'actions',
+    header: () => {
+      return <Button variant="ghost">Actions</Button>;
+    },
     cell: ({ row }) => {
       const { id } = row.original;
       return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button className="h-4 w-8 p-0" variant="ghost">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <Link href={`/teacher/courses/${id}`}>
-              <DropdownMenuItem>
-                <Pencil className="h-4 w-4 mr-2" />
-                Edit
-              </DropdownMenuItem>
-            </Link>
-            {/* <DeleteAction teacherId={id} /> */}
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <span className="flex space-x-1 lg:space-x-2">
+          <EditAction courseId={id} />
+        </span>
       );
     },
   },

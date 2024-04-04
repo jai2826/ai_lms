@@ -2,6 +2,7 @@
 
 import { Button } from '@/components/ui/button';
 import { useConfettiStore } from '@/hooks/useConfettiStore';
+import { useLoader } from '@/hooks/useloader';
 import axios from 'axios';
 import { CheckCircle, XCircle } from 'lucide-react';
 import { useRouter } from 'next/navigation';
@@ -24,28 +25,32 @@ export const CourseProgressButton = ({
   const router = useRouter();
   const confetti = useConfettiStore();
   const [isLoading, setIsLoading] = useState(false);
+  const loader = useLoader();
   const onClick = async () => {
     try {
       setIsLoading(true);
+      loader.setValue(30)
       await axios.put(
         `/api/courses/${courseId}/chapters/${chapterId}/progress`,
         {
           isCompleted: !isCompleted,
         }
-      );
-      if (!isCompleted && !nextChapterId) {
-        confetti.onOpen();
-      }
-      if (!isCompleted && nextChapterId) {
-        router.push(`/courses/${courseId}/chapters/${nextChapterId}`);
-      }
-
-      toast.success('Progress Updated');
-      router.refresh();
-    } catch {
-      toast.error('Something went wrong');
-    } finally {
-      setIsLoading(false);
+        );
+        loader.setValue(60)
+        if (!isCompleted && !nextChapterId) {
+          confetti.onOpen();
+        }
+        if (!isCompleted && nextChapterId) {
+          router.push(`/courses/${courseId}/chapters/${nextChapterId}`);
+        }
+        
+        toast.success('Progress Updated');
+        router.refresh();
+      } catch {
+        toast.error('Something went wrong');
+      } finally {
+        setIsLoading(false);
+        loader.setValue(100)
     }
   };
 

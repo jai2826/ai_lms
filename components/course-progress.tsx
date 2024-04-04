@@ -23,6 +23,7 @@ export const CourseProgress = ({
 }: CourseProgressProps) => {
   return (
     <div>
+      {/* @ts-ignore */}
       <Progress className="h-2 " value={value} variant={variant} />
       <p
         className={cn(

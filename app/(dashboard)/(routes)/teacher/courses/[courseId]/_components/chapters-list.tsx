@@ -1,16 +1,16 @@
 'use client';
 
-import { Chapter } from '@prisma/client';
-import { useEffect, useState } from 'react';
+import { Badge } from '@/components/ui/badge';
+import { cn } from '@/lib/utils';
 import {
   DragDropContext,
-  Droppable,
   Draggable,
   DropResult,
+  Droppable,
 } from '@hello-pangea/dnd';
-import { cn } from '@/lib/utils';
-import { Copy, Grip, Pencil } from 'lucide-react';
-import { Badge } from '@/components/ui/badge';
+import { Chapter } from '@prisma/client';
+import { Grip, Pencil } from 'lucide-react';
+import { useEffect, useState } from 'react';
 
 interface ChaptersListProps {
   items: Chapter[];
@@ -77,7 +77,7 @@ export const ChaptersList = ({
                         'bg-sky-100 border-sky-200 text-sky-700'
                     )}
                     ref={provided.innerRef}
-                    {...provided.draggableProps}
+                    // {...provided.draggableProps}
                   >
                     <div
                       className={cn(

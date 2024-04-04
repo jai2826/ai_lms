@@ -12,6 +12,8 @@ import {
   useReactTable,
 } from '@tanstack/react-table';
 
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import {
   Table,
   TableBody,
@@ -20,11 +22,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { Button } from '@/components/ui/button';
 import * as React from 'react';
-import { Input } from '@/components/ui/input';
-import Link from 'next/link';
-import { PlusCircle } from 'lucide-react';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];

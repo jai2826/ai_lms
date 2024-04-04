@@ -1,10 +1,9 @@
+import { auth } from '@/auth';
+import { CourseProgress } from '@/components/course-progress';
 import { db } from '@/lib/db';
 import { Chapter, Course, UserProgress } from '@prisma/client';
 import { redirect } from 'next/navigation';
 import { CourseSidebarItem } from './course-sidebar-item';
-import { CourseProgress } from '@/components/course-progress';
-import { useSession } from 'next-auth/react';
-import { auth } from '@/auth';
 
 interface CourseSidebarProps {
   course: Course & {

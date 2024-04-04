@@ -1,6 +1,7 @@
 'use client';
 import { ConfirmModal } from '@/components/modals/confirm-modal';
 import { Button } from '@/components/ui/button';
+import { useLoader } from '@/hooks/useloader';
 import { DropdownMenuItem } from '@radix-ui/react-dropdown-menu';
 import axios from 'axios';
 import { Copy } from 'lucide-react';
@@ -14,18 +15,22 @@ interface DuplicateActionProps {
 const DuplicateAction = ({ courseId }: DuplicateActionProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
-
+const loader = useLoader();
   const createDuplicate = async () => {
     try {
       setIsLoading(true);
+      loader.setValue(30)
       const newCourse = await axios.post(`/api/courses/${courseId}/duplicate`);
+      loader.setValue(60)
       toast.success('Course created');
       router.push(`/teacher/courses/${newCourse.data.id}`);
+      loader.setValue(80)
       router.refresh();
     } catch {
       toast.error('Something went wrong');
     } finally {
       setIsLoading(false);
+      loader.setValue(100)
     }
   };
   return (

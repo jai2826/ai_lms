@@ -13,6 +13,7 @@ import Link from 'next/link';
 import DeleteAction from './actions/delete-action';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
+import EditAction from './actions/edit-action';
 
 
 export const columns: ColumnDef<Teacher>[] = [
@@ -68,26 +69,17 @@ export const columns: ColumnDef<Teacher>[] = [
   },
   {
     id: 'actions',
+    header: () => {
+      return <Button variant="ghost">Actions</Button>;
+    },
     cell: ({ row }) => {
       const { id } = row.original;
       return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button className="h-4 w-8 p-0" variant="ghost">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <Link href={`/admin/teacher/${id}`}>
-              <DropdownMenuItem>
-                <Pencil className="h-4 w-4 mr-2" />
-                Edit
-              </DropdownMenuItem>
-            </Link>
-            <DeleteAction teacherId={id} />
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <span className="flex space-x-1 lg:space-x-2">
+          <EditAction teacherId={id} />
+          <DeleteAction teacherId={id} />
+          
+        </span>
       );
     },
   },

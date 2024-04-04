@@ -49,6 +49,14 @@ const SearchPage = async ({ searchParams }: SearchPageProps) => {
       return item;
   });
 
+
+
+  
+
+  // const treningCourses = courses.filter((course) => {
+  //   const data = course.purshase
+  // });
+
   return (
     <>
       {categoryPreference.length === 0 ? (

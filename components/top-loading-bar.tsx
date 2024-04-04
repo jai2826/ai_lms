@@ -8,8 +8,7 @@ export const Loader = () => {
 
   return (
     <LoadingBar
-      waitingTime={500}
-      
+      waitingTime={1000}
       transitionTime={400}
       loaderSpeed={500}
       color="#f11946"

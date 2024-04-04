@@ -1,5 +1,5 @@
 import { metadata } from './../app/layout';
-import { Category, Course } from '@prisma/client';
+import { Category, Course, Purchase } from '@prisma/client';
 import { getProgress } from './get-progress';
 import { db } from '@/lib/db';
 

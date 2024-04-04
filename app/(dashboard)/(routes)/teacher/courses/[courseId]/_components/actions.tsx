@@ -3,6 +3,7 @@
 import { ConfirmModal } from '@/components/modals/confirm-modal';
 import { Button } from '@/components/ui/button';
 import { useConfettiStore } from '@/hooks/useConfettiStore';
+import { useLoader } from '@/hooks/useloader';
 import axios from 'axios';
 import { Trash } from 'lucide-react';
 import { useRouter } from 'next/navigation';
@@ -17,24 +18,30 @@ interface ActionsProps {
 export const Actions = ({ disabled, courseId, isPublished }: ActionsProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
-  const confetti = useConfettiStore()
+  const confetti = useConfettiStore();
+  const loader = useLoader();
 
   const onDelete = async () => {
     try {
+      loader.setValue(30);
       setIsLoading(true);
       await axios.delete(`/api/courses/${courseId}`);
+      loader.setValue(60);
       toast.success('Course deleted');
       router.push(`/teacher/courses`);
       router.refresh();
+      loader.setValue(80);
     } catch {
       toast.error('Something went wrong');
     } finally {
       setIsLoading(false);
+      loader.setValue(100);
     }
   };
 
   const onClick = async () => {
     try {
+      loader.setValue(30);
       setIsLoading(true);
       if (isPublished) {
         await axios.patch(`/api/courses/${courseId}/unpublish`);
@@ -44,11 +51,13 @@ export const Actions = ({ disabled, courseId, isPublished }: ActionsProps) => {
         toast.success('Course published');
         confetti.onOpen();
       }
+      loader.setValue(60);
       router.refresh();
     } catch {
       toast.error('Something went wrong');
     } finally {
       setIsLoading(false);
+      loader.setValue(100);
     }
   };
 

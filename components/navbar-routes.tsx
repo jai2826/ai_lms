@@ -1,39 +1,31 @@
 'use client';
 
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { Button } from './ui/button';
 import { LogOut } from 'lucide-react';
 import Link from 'next/link';
 import { SearchInput } from './search-input';
 import { UserButton } from './auth/user-button';
 import { useSession } from 'next-auth/react';
-import { useEffect, useState } from 'react';
-import { Teacher } from '@prisma/client';
-import { allTeacherData } from '@/data/all-users-data';
+import { useLoader } from '@/hooks/useloader';
+import { useTeacher } from '@/hooks/useTeacher';
 
 export const NavbarRoutes = () => {
-  const [teacher, setTeacher] = useState<Teacher | null>(null);
   const session = useSession();
   const userId = session.data?.user.id;
-  useEffect(() => {
-    const fetchTeacher = async () => {
-      if (!userId) {
-        return;
-      }
-      const teacherData = await allTeacherData();
-      const newTeacher = teacherData?.find((item) => item.userId === userId);
-      setTeacher(newTeacher!);
-    };
-    fetchTeacher();
-  }, [userId]);
+  let teacher = useTeacher();
+
+  if (teacher?.userId !== userId) teacher = undefined;
 
   const isAdmin = session.data?.user.role === 'ADMIN';
   const pathname = usePathname();
   const isTeacherPage = pathname?.startsWith('/teacher');
   const isCoursePage =
-    pathname?.includes('/course') && !pathname?.startsWith('/admin');
+    pathname?.includes('/courses') && !pathname?.startsWith('/admin');
+
   const isSearchPage = pathname === '/search';
-  // const
+  const router = useRouter();
+  const loader = useLoader();
   return (
     <>
       {isSearchPage && (
@@ -44,27 +36,45 @@ export const NavbarRoutes = () => {
       {
         <div className="flex gap-x-2 ml-auto">
           {(isTeacherPage || isCoursePage) && (
-            <Link href={'/'}>
-              <Button size={'sm'} variant={'ghost'}>
-                <LogOut className="h-4 w-4" />
-                Exit
-              </Button>
-            </Link>
+            <Button
+              onClick={() => {
+                loader.setValue(40);
+                router.push('/search');
+                loader.setValue(100);
+              }}
+              size={'sm'}
+              variant={'ghost'}
+            >
+              <LogOut className="h-4 w-4" />
+              Exit
+            </Button>
           )}
-          {teacher && (!isTeacherPage || !isCoursePage) && (
-            <Link href={'/teacher/courses'}>
-              <Button size="sm" variant="ghost">
-                Teacher mode
-              </Button>
-            </Link>
+          {teacher && !isTeacherPage && (
+            <Button
+              onClick={() => {
+                loader.setValue(40);
+                router.push('/teacher/courses');
+                loader.setValue(100);
+              }}
+              size="sm"
+              variant="ghost"
+            >
+              Teacher mode
+            </Button>
           )}
 
           {isAdmin && (
-            <Link href={'/admin/teacher'}>
-              <Button size="sm" variant="ghost">
-                Admin mode
-              </Button>
-            </Link>
+            <Button
+              onClick={() => {
+                loader.setValue(40);
+                router.push('/admin/teacher');
+                loader.setValue(100);
+              }}
+              size="sm"
+              variant="ghost"
+            >
+              Admin mode
+            </Button>
           )}
           <UserButton />
         </div>

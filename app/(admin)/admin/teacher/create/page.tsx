@@ -13,6 +13,7 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { allTeacherData, allUsersData } from '@/data/all-users-data';
+import { useLoader } from '@/hooks/useloader';
 import { db } from '@/lib/db';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { User } from '@prisma/client';
@@ -33,6 +34,7 @@ const formSchema = z.object({
 const TeacherCreatePage = () => {
   const router = useRouter();
   const [options, setOptions] = useState<any>();
+  const loader = useLoader();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -42,11 +44,13 @@ const TeacherCreatePage = () => {
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    // console.log(values);
     try {
+      loader.setValue(40);
       const response = await axios.post('/api/teacher', values);
+      loader.setValue(70);
       router.push(`/admin/teacher/${response.data.id}`);
       toast.success('Teacher created');
+      loader.setValue(100);
     } catch {
       toast.error('Something went wrong');
     }

@@ -32,14 +32,12 @@ const formSchema = z.object({
 
 export const IntroForm = ({ initialData, courseId }: IntroFormProps) => {
   const [isEditing, setIsEditing] = useState(false);
-  const [isReady, setIsReady] = useState(false);
   const toggleEdit = () => setIsEditing((current) => !current);
 
   const router = useRouter();
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      console.log('test');
       await axios.patch(`/api/courses/${courseId}`, values);
       toast.success('Course updated');
       toggleEdit();

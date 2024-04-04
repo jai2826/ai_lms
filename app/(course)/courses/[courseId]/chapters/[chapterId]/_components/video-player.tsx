@@ -2,13 +2,12 @@
 
 import { useConfettiStore } from '@/hooks/useConfettiStore';
 import { cn } from '@/lib/utils';
-import MuxPlayer from '@mux/mux-player-react';
 import axios from 'axios';
 import { Loader2, Lock } from 'lucide-react';
+import Video from 'next-video';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
-import Video from 'next-video';
 
 interface VideoPlayerProps {
   playbackId: string;
@@ -18,7 +17,7 @@ interface VideoPlayerProps {
   isLocked: boolean;
   completeOnEnd: boolean;
   title: string;
-  src: string
+  src: string;
 }
 export const VideoPlayer = ({
   chapterId,
@@ -46,6 +45,7 @@ export const VideoPlayer = ({
       if (!nextChapterId) {
         confetti.onOpen();
       }
+
       toast.success('Progress Updated');
       router.refresh();
 

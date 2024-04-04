@@ -1,34 +1,20 @@
-import { db } from '@/lib/db';
-import MuxPlayer from '@mux/mux-player-react';
-import { Separator } from '@/components/ui/separator';
-import { CheckCircle, File, Lock } from 'lucide-react';
 import { Preview } from '@/components/preview';
-import { redirect } from 'next/navigation';
-import { CourseVideoPlayer } from './_components/course-video-player';
-import { CourseEnrollButton } from './chapters/[chapterId]/_components/course-enroll-button';
-import { currentUser } from '@/lib/currentUser';
 import { Button } from '@/components/ui/button';
-import Link from 'next/link';
 import {
   Card,
   CardContent,
   CardFooter,
   CardHeader,
 } from '@/components/ui/card';
+import { Separator } from '@/components/ui/separator';
+import { currentUser } from '@/lib/currentUser';
+import { db } from '@/lib/db';
+import { cn } from '@/lib/utils';
 import { SocialsType } from '@prisma/client';
+import { CheckCircle, File, Lock } from 'lucide-react';
+import Link from 'next/link';
+import { redirect } from 'next/navigation';
 import { IconType } from 'react-icons';
-import {
-  FaDiscord,
-  FaFacebook,
-  FaGithub,
-  FaLinkedin,
-  FaReddit,
-  FaSquareThreads,
-  FaSquareXTwitter,
-  FaTwitter,
-  FaXTwitter,
-  FaYoutube,
-} from 'react-icons/fa6';
 import {
   FaFacebookSquare,
   FaInstagramSquare,
@@ -36,7 +22,17 @@ import {
   FaSnapchatSquare,
   FaWhatsappSquare,
 } from 'react-icons/fa';
-import { cn } from '@/lib/utils';
+import {
+  FaDiscord,
+  FaGithub,
+  FaLinkedin,
+  FaSquareThreads,
+  FaSquareXTwitter,
+  FaYoutube,
+} from 'react-icons/fa6';
+import { CourseVideoPlayer } from './_components/course-video-player';
+import { CourseEnrollButton } from './chapters/[chapterId]/_components/course-enroll-button';
+import { useEffect } from 'react';
 
 const iconMap: Record<SocialsType['name'], IconType> = {
   Github: FaGithub,
@@ -95,6 +91,7 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
       },
     },
   });
+  
   if (!course) {
     return redirect('/');
   }
@@ -189,11 +186,11 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
                     key={item.id}
                     className="relative bg-white rounded-md h-28 w-full flex flex-col p-1 group "
                   >
-                    {!purchase && item.isLocked &&
-                      <div className="absolute rounded-md inset-0 hidden items-center justify-center group-hover:flex transition-all duration-1000 ease-in-out bg-indigo-500">
+                    {!purchase && item.isLocked && (
+                      <div className="absolute rounded-md inset-0 hidden items-center justify-center group-hover:flex transition-all duration-1000 ease-in-out bg-purple-500">
                         <Lock className="h-8 w-8" />
                       </div>
-                    }
+                    )}
                     <Link
                       href={item.link}
                       target="_blank"
