@@ -28,7 +28,6 @@ export const CourseSidebarItem = ({
   const onClick = () => {
     loader.setValue(40);
     router.push(`/courses/${courseId}/chapters/${id}`);
-    loader.setValue(100);
   };
   return (
     <button

@@ -40,7 +40,6 @@ export const NavbarRoutes = () => {
               onClick={() => {
                 loader.setValue(40);
                 router.push('/search');
-                loader.setValue(100);
               }}
               size={'sm'}
               variant={'ghost'}
@@ -54,7 +53,6 @@ export const NavbarRoutes = () => {
               onClick={() => {
                 loader.setValue(40);
                 router.push('/teacher/courses');
-                loader.setValue(100);
               }}
               size="sm"
               variant="ghost"
@@ -68,7 +66,6 @@ export const NavbarRoutes = () => {
               onClick={() => {
                 loader.setValue(40);
                 router.push('/admin/teacher');
-                loader.setValue(100);
               }}
               size="sm"
               variant="ghost"

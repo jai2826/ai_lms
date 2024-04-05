@@ -26,11 +26,9 @@ export const AdminSidebarItem = ({
     pathname?.startsWith(`${href}/`);
 
   const onClick = () => {
-    loader.setValue(25);
+    loader.setValue(40);
     router.push(href);
-    loader.setValue(50);
     router.refresh();
-    loader.setValue(100);
   };
 
   return (

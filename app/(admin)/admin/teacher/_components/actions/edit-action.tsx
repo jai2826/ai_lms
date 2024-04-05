@@ -13,9 +13,9 @@ const EditAction = ({ teacherId }: EditActionProps) => {
   const router = useRouter();
   const loader = useLoader();
   const handleClick = () => {
+    setIsLoading(true)
     loader.setValue(50);
     router.push(`/admin/teacher/${teacherId}`);
-    loader.setValue(100);
   };
   return (
     <Button

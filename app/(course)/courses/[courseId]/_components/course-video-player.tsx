@@ -31,7 +31,6 @@ export const CourseVideoPlayer = ({
         title={title}
         className={cn(!isReady && 'hidden')}
         onCanPlay={() => setIsReady(true)}
-        autoPlay
         src={src}
       />
     </div>

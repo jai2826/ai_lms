@@ -1,5 +1,8 @@
 'use client';
 
+import { useCurrentUser } from '@/hooks/useCurrentUser';
+import { LogOut, User } from 'lucide-react';
+import Link from 'next/link';
 import { FaUser } from 'react-icons/fa';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 import {
@@ -8,13 +11,12 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '../ui/dropdown-menu';
-import { useCurrentUser } from '@/hooks/useCurrentUser';
 import { LogoutButton } from './logout-button';
-import { LogOut, User } from 'lucide-react';
-import Link from 'next/link';
+import { useLoader } from '@/hooks/useloader';
 
 export const UserButton = () => {
   const user = useCurrentUser();
+  const loader = useLoader();
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className="outline-none">
@@ -26,7 +28,12 @@ export const UserButton = () => {
         </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-40 " align="end">
-        <Link href={'/user'}>
+        <Link
+          onClick={() => {
+            loader.setValue(40);
+          }}
+          href={'/user'}
+        >
           <DropdownMenuItem>
             <User className="h-4 w-4 mr-2" />
             Profile

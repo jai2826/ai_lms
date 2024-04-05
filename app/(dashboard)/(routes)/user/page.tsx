@@ -3,7 +3,7 @@ import { Profile } from '@/actions/profile';
 import { FileUpload } from '@/components/file-upload';
 import { FormError } from '@/components/form-error';
 import { Button } from '@/components/ui/button';
-import { Card, CardHeader, CardContent } from '@/components/ui/card';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import {
   Form,
   FormControl,
@@ -142,7 +142,7 @@ const ProfilePage = () => {
                             />
 
                             <div className="text-xs text-muted-foreground mt-4">
-                             1:1 aspect ratio recommended
+                              1:1 aspect ratio recommended
                             </div>
                           </div>
                         )}

@@ -26,12 +26,11 @@ export const SidebarItem = ({
     pathname === href ||
     pathname?.startsWith(`${href}/`);
   const loader = useLoader();
+
   const onClick = () => {
     loader.setValue(30);
     router.push(href);
-    loader.setValue(60);
     router.refresh();
-    loader.setValue(100);
   };
 
   return (

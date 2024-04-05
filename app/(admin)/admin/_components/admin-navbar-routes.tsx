@@ -38,7 +38,6 @@ export const AdminNavbarRoutes = () => {
             onClick={() => {
               loader.setValue(40);
               router.push('/search');
-              loader.setValue(100);
             }}
             size={'sm'}
             variant={'ghost'}
@@ -52,7 +51,6 @@ export const AdminNavbarRoutes = () => {
               onClick={() => {
                 loader.setValue(40);
                 router.push('/teacher/courses');
-                loader.setValue(100);
               }}
               size="sm"
               variant="ghost"

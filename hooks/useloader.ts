@@ -1,3 +1,5 @@
+import { useRef } from 'react';
+import { Ref } from 'react';
 import { create } from 'zustand';
 
 type LoaderStore = {
