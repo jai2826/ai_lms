@@ -6,8 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "postinstall": "prisma generate"
+    "lint": "next lint"
   },
   "overrides": {
     "acorn": "8.10.0"
@@ -30,7 +29,9 @@
     "@radix-ui/react-slot": "^1.0.2",
     "@radix-ui/react-switch": "^1.0.3",
     "@radix-ui/react-tooltip": "^1.0.7",
+    "@stripe/stripe-js": "^3.2.0",
     "@tanstack/react-table": "^8.11.7",
+    "@types/nodemailer": "^6.4.14",
     "@uploadthing/react": "^6.2.3",
     "axios": "^1.6.3",
     "bcrypt": "^5.1.1",
@@ -42,10 +43,11 @@
     "graphql-request": "^6.1.0",
     "lucide": "^0.330.0",
     "lucide-react": "^0.299.0",
-    "next": "^14.1.0",
+    "next": "^14.1.4",
     "next-auth": "^5.0.0-beta.13",
     "next-video": "^0.17.2",
     "node": "^21.2.0",
+    "nodemailer": "^6.9.13",
     "query-string": "^8.1.0",
     "react": "^18.2.0",
     "react-confetti": "^6.1.0",
@@ -58,7 +60,7 @@
     "react-top-loading-bar": "^2.3.1",
     "recharts": "^2.11.0",
     "resend": "^3.2.0",
-    "stripe": "^14.14.0",
+    "stripe": "^14.24.0",
     "tailwind-merge": "^2.1.0",
     "tailwindcss-animate": "^1.0.7",
     "uploadthing": "^6.4.1",

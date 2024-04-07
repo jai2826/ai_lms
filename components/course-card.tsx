@@ -1,9 +1,11 @@
+'use client';
 import { formatPrice } from '@/lib/format';
 import { BookOpen } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { CourseProgress } from './course-progress';
 import { IconBadge } from './icon-badge';
+import { useLoader } from '@/hooks/useloader';
 
 interface CourseCardProps {
   id: string;
@@ -24,9 +26,13 @@ export const CourseCard = ({
   progress,
   title,
 }: CourseCardProps) => {
+  const loader = useLoader();
+
   return (
-    <Link href={`/courses/${id}`}>
-      <div className="group hover:shadow-sm tranistion overflow-hidden border rounded-lg p-3 h-full">
+    <Link 
+    onClick={() => loader.setValue(40)}
+     href={`/courses/${id}`}>
+      <div className="group hover:shadow-xl hover:scale-105 tranistion overflow-hidden border rounded-lg p-3 h-full transition ease-in-out">
         <div className="relative w-full aspect-video rounded-md overflow-hidden">
           <Image fill className="object-cover " alt="title" src={imageUrl} />
         </div>

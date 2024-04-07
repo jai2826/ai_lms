@@ -49,10 +49,6 @@ const SearchPage = async ({ searchParams }: SearchPageProps) => {
       return item;
   });
 
-
-
-  
-
   // const treningCourses = courses.filter((course) => {
   //   const data = course.purshase
   // });
@@ -68,7 +64,11 @@ const SearchPage = async ({ searchParams }: SearchPageProps) => {
           </div>
           <div className="p-6 space-y-4">
             <Categories items={categories} />
-            <CoursesList items={courses} />
+            <div>
+              <h1 className="text-xl font-semibold py-2">Trending Courses</h1>
+
+              <CoursesList items={courses} />
+            </div>
             <PreferredCoursesList items={preferredCourses} />
           </div>
         </>

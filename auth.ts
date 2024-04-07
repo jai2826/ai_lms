@@ -58,16 +58,6 @@ export const {
         session.user.image = token.image as string;
       }
 
-      // if (session.teacher) {
-      //   // @ts-ignore
-      //   session.teacher.name = token.teacher.name;
-      //   // @ts-ignore
-      //   session.teacher.email = token.teacher.email;
-      //   // @ts-ignore
-      //   session.teacher.phone = token.teacher.phone;
-      //   // @ts-ignore
-      //   session.teacher.image = token.teacher.image;
-      // }
 
       return session;
     },

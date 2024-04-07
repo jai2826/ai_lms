@@ -1,5 +1,6 @@
 'use client';
 
+import { useLoader } from '@/hooks/useloader';
 import { cn } from '@/lib/utils';
 import { LucideIcon } from 'lucide-react';
 import { usePathname, useRouter } from 'next/navigation';
@@ -13,6 +14,7 @@ interface SidebarItemProps {
 export const SidebarItem = ({ icon: Icon, label, href }: SidebarItemProps) => {
   const pathname = usePathname();
   const router = useRouter();
+  const loader = useLoader();
 
   const isActive =
     (pathname === '/' && href === '/') ||
@@ -20,6 +22,7 @@ export const SidebarItem = ({ icon: Icon, label, href }: SidebarItemProps) => {
     pathname?.startsWith(`${href}/`);
 
   const onClick = () => {
+    loader.setValue(40)
     router.push(href);
     router.refresh();
   };

@@ -51,10 +51,6 @@ export async function POST(
       },
     ];
 
-    
-
-    
-
     let stripeCustomer = await db.stripeCustomer.findUnique({
       where: {
         userId: user.id,

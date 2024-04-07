@@ -13,7 +13,7 @@ export function NavigationEvents() {
     loader.setValue(60);
     const url = `${pathname}?${searchParams}`;
     loader.setValue(80);
-    console.log(url);
+    // console.log(url);
     loader.setValue(100);
   }, [pathname, searchParams]);
 

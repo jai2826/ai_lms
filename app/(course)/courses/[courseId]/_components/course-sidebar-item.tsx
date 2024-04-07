@@ -36,7 +36,7 @@ export const CourseSidebarItem = ({
       className={cn(
         'flex items-center gap-x-2 text-purple-500 text-sm font-[500] pl-6 transition-all hover:text-purple-600 hover:bg-slate-300/20 group',
         isActive &&
-          'text-purple-500 bg-purple-200/20 hover:bg-slate-200/20 hover:text-indigo-700',
+          'text-purple-500 bg-purple-200/20 hover:bg-slate-200/20 hover:text-purple-700',
         isCompleted && 'text-emerald-700 hover:text-emerald-700',
         isCompleted && isActive && 'bg-emerald-200/20 '
       )}
