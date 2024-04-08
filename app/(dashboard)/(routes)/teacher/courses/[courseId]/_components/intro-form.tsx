@@ -1,21 +1,16 @@
 'use client';
 
-import Video from 'next-video';
-import * as z from 'zod';
+import { Course, MuxDataCourse } from '@prisma/client';
 import axios from 'axios';
-import { Pencil, PlusCircle, ImageIcon, VideoIcon } from 'lucide-react';
+import { Pencil, PlusCircle, VideoIcon } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
-import { useRouter } from 'next/navigation';
-import { Course, MuxDataCourse } from '@prisma/client';
-import Image from 'next/image';
+import * as z from 'zod';
 
-import { Button } from '@/components/ui/button';
-import { FileUpload } from '@/components/file-upload';
-import { onSubmitUpdateData } from '@/lib/update-data';
-import MuxPlayer from '@mux/mux-player-react';
-import { cn } from '@/lib/utils';
 import { CourseVideoPlayer } from '@/app/(course)/courses/[courseId]/_components/course-video-player';
+import { FileUpload } from '@/components/file-upload';
+import { Button } from '@/components/ui/button';
 
 interface IntroFormProps {
   initialData: Course & {

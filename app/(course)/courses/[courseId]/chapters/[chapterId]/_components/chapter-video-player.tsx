@@ -1,10 +1,9 @@
 'use client';
 
+import { Player } from '@/components/video-player/player';
 import { useConfettiStore } from '@/hooks/useConfettiStore';
-import { cn } from '@/lib/utils';
 import axios from 'axios';
 import { Loader2, Lock } from 'lucide-react';
-import Video from 'next-video';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
@@ -72,20 +71,11 @@ export const VideoPlayer = ({
         </div>
       )}
       {!isLocked && (
-        // <MuxPlayer
-        //   title={title}
-        //   className={cn(!isReady && 'hidden')}
-        //   onCanPlay={() => setIsReady(true)}
-        //   onEnded={onEnd}
-        //   autoPlay
-        //   playbackId={playbackId}
-        // />
-        <Video
+        <Player
           title={title}
-          className={cn(!isReady && 'hidden')}
           onCanPlay={() => setIsReady(true)}
           onEnded={onEnd}
-          
+          autoPlay
           src={src}
         />
       )}

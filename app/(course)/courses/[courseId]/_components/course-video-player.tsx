@@ -1,8 +1,7 @@
 'use client';
 
-import { cn } from '@/lib/utils';
+import { Player } from '@/components/video-player/player';
 import { Loader2 } from 'lucide-react';
-import Video from 'next-video';
 import { useState } from 'react';
 
 interface CourseVideoPlayerProps {
@@ -26,13 +25,7 @@ export const CourseVideoPlayer = ({
           <Loader2 className="h-8 w-8 animate-spin text-secondary" />
         </div>
       )}
-
-      <Video
-        title={title}
-        className={cn(!isReady && 'hidden')}
-        onCanPlay={() => setIsReady(true)}
-        src={src}
-      />
+      {<Player autoPlay={true} src={src} title={title} />}
     </div>
   );
 };

@@ -1,4 +1,3 @@
-
 import { Preview } from '@/components/preview';
 import { Button } from '@/components/ui/button';
 import {
@@ -92,7 +91,7 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
       },
     },
   });
-  
+
   if (!course) {
     return redirect('/');
   }

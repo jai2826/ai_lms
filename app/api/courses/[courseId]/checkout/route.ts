@@ -14,13 +14,14 @@ export async function POST(
     if (!user || !user.id || !user.email) {
       return new NextResponse('Unauthorized', { status: 401 });
     }
-
+    console.log('first')
     const course = await db.course.findUnique({
       where: {
         id: params.courseId,
         isPublished: true,
       },
     });
+    console.log('second')
     const purchase = await db.purchase.findUnique({
       where: {
         userId_courseId: {
@@ -29,14 +30,17 @@ export async function POST(
         },
       },
     });
-
+    console.log('third')
+    
     if (purchase) {
       return new NextResponse('Already purchased', { status: 400 });
     }
+    console.log('fourth')
     if (!course) {
       return new NextResponse('Not found', { status: 404 });
     }
-
+    console.log('fifth')
+    
     const line_items: Stripe.Checkout.SessionCreateParams.LineItem[] = [
       {
         quantity: 1,
@@ -50,7 +54,7 @@ export async function POST(
         },
       },
     ];
-
+    
     let stripeCustomer = await db.stripeCustomer.findUnique({
       where: {
         userId: user.id,
@@ -70,7 +74,8 @@ export async function POST(
         },
       });
     }
-
+    
+    console.log('sixth')
     const session = await stripe.checkout.sessions.create({
       customer: stripeCustomer.stripeCustomerId,
       line_items,
@@ -82,7 +87,8 @@ export async function POST(
         userId: user.id,
       },
     });
-
+    
+    console.log('seventh')
     return NextResponse.json({ url: session.url });
   } catch (error) {
     console.log('[COURSE_ID_CHECKOUT', error);

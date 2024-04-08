@@ -25,6 +25,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { HelpCircle, ImageIcon, Settings, Upload, XCircle } from 'lucide-react';
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 import { useState, useTransition } from 'react';
 import { useForm } from 'react-hook-form';
@@ -33,10 +34,12 @@ import * as z from 'zod';
 
 const ProfilePage = () => {
   const user = useCurrentUser();
+  const router = useRouter();
   const { update } = useSession();
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | undefined>();
   const [toggleEdit, setToggleEdit] = useState<boolean>(false);
+  const [enable, setEnable] = useState<boolean>(true);
   const form = useForm<z.infer<typeof ProfileSchema>>({
     resolver: zodResolver(ProfileSchema),
     defaultValues: {
@@ -50,6 +53,12 @@ const ProfilePage = () => {
 
   const onSubmit = (values: z.infer<typeof ProfileSchema>) => {
     startTransition(() => {
+      if (!form.formState.isDirty) {
+        toast.success('All fields are up to data');
+        router.refresh();
+
+        return;
+      }
       Profile(values)
         .then((data) => {
           if (data.error) {
@@ -61,12 +70,13 @@ const ProfilePage = () => {
             update();
             toast.success(data.success);
             setToggleEdit(false);
-            form.setValue('password', '');
           }
+          router.refresh();
         })
         .catch(() => setError('Something went wrong!'));
     });
   };
+
   const cancelImageForm = () => {
     form.setValue('image', user?.image || undefined);
     setToggleEdit(false);
@@ -174,92 +184,94 @@ const ProfilePage = () => {
                   </FormItem>
                 )}
               />
-              {
-                <>
-                  <FormField
-                    control={form.control}
-                    name="email"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="text-lg flex items-center">
-                          <span>
-                            Email
-                            {form.getValues('email') !== user?.email && '🟢'}
-                          </span>
-                          {user?.isOAuth && (
-                            <TooltipProvider>
-                              <Tooltip>
-                                <TooltipTrigger type="button">
-                                  <HelpCircle className="ml-2 h-5 w-5" />
-                                </TooltipTrigger>
-                                <TooltipContent>
-                                  <p>
-                                    This field is handled by your OAuth provider
-                                  </p>
-                                </TooltipContent>
-                              </Tooltip>
-                            </TooltipProvider>
-                          )}
-                        </FormLabel>
-                        <FormControl>
-                          <Input
-                            {...field}
-                            placeholder="Johndoe@gmail.com"
-                            disabled={isPending || user!.isOAuth}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="password"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="text-lg flex items-center">
-                          <span>
-                            Password
-                            {form.getValues('password') && '🟢'}
-                          </span>
-                          {user?.isOAuth && (
-                            <TooltipProvider>
-                              <Tooltip>
-                                <TooltipTrigger type="button">
-                                  <HelpCircle className="ml-2 h-5 w-5" />
-                                </TooltipTrigger>
-                                <TooltipContent>
-                                  <p>
-                                    This field is handled by your OAuth provider
-                                  </p>
-                                </TooltipContent>
-                              </Tooltip>
-                            </TooltipProvider>
-                          )}
-                        </FormLabel>
-                        <FormControl>
-                          <Input
-                            {...field}
-                            type="password"
-                            placeholder="******"
-                            disabled={isPending || user!.isOAuth}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </>
-              }
+
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-lg flex items-center">
+                      <span>
+                        Email
+                        {form.getValues('email') !== user?.email && '🟢'}
+                      </span>
+                      {user?.isOAuth && (
+                        <TooltipProvider>
+                          <Tooltip>
+                            <TooltipTrigger type="button">
+                              <HelpCircle className="ml-2 h-5 w-5" />
+                            </TooltipTrigger>
+                            <TooltipContent>
+                              <p>
+                                This field is handled by your OAuth provider
+                              </p>
+                            </TooltipContent>
+                          </Tooltip>
+                        </TooltipProvider>
+                      )}
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        {...field}
+                        placeholder="Johndoe@gmail.com"
+                        disabled={isPending || user!.isOAuth}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="password"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-lg flex items-center">
+                      <span>
+                        Password
+                        {form.getValues('password') && '🟢'}
+                      </span>
+                      {user?.isOAuth && (
+                        <TooltipProvider>
+                          <Tooltip>
+                            <TooltipTrigger type="button">
+                              <HelpCircle className="ml-2 h-5 w-5" />
+                            </TooltipTrigger>
+                            <TooltipContent>
+                              <p>
+                                This field is handled by your OAuth provider
+                              </p>
+                            </TooltipContent>
+                          </Tooltip>
+                        </TooltipProvider>
+                      )}
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        {...field}
+                        type="password"
+                        placeholder="******"
+                        disabled={isPending || user!.isOAuth}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
               <FormError message={error} />
-
               <span className="flex items-center space-x-2">
-                <Button type="submit">Save</Button>
+                <Button disabled={isPending} type="submit">
+                  Save
+                </Button>
                 <Button
+                  disabled={isPending}
                   onClick={() => {
-                    form.reset();
-                    form.setValue('password', '');
+                    form.setValue('name', user?.name || undefined);
+                    form.setValue('email', user?.email || undefined);
+                    form.setValue('image', user?.image || undefined);
+                    cancelImageForm();
+                    form.setValue('password', undefined);
                   }}
                   type="button"
                 >

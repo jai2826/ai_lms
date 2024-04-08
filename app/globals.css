@@ -88,3 +88,5 @@ body,
 
 @import "~@uploadthing/react/styles.css";
 
+
+@import "@vidstack/react/player/styles/base.css";
