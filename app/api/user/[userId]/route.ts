@@ -1,6 +1,4 @@
 import { db } from '@/lib/db';
-import { auth } from '@/auth';
-import Mux from '@mux/mux-node';
 import { NextResponse } from 'next/server';
 
 // export async function DELETE(
