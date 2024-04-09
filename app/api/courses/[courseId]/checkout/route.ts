@@ -9,7 +9,7 @@ export async function POST(
   { params }: { params: { courseId: string } }
 ) {
   try {
-    // TODO fix user import
+    
     const user = await currentUser();
     if (!user || !user.id || !user.email) {
       return new NextResponse('Unauthorized', { status: 401 });

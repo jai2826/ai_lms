@@ -12,7 +12,6 @@ interface CourseEnrollButtonProps {
   courseId: string;
 }
 
-
 export const CourseEnrollButton = ({
   price,
   courseId,
@@ -24,7 +23,7 @@ export const CourseEnrollButton = ({
       setIsLoading(true);
       loader.setValue(30);
       const response = await axios.post(`/api/courses/${courseId}/checkout`);
-      console.log(response)
+
       window.location.assign(response.data.url);
       loader.setValue(60);
     } catch {

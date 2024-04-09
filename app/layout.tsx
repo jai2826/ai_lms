@@ -8,6 +8,7 @@ import { Inter } from 'next/font/google';
 import './globals.css';
 import { NavigationEvents } from '@/components/navigation';
 import { Suspense } from 'react';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
@@ -31,6 +32,7 @@ export default async function RootLayout({
             <ConfettiProvider />
             <ToastProvider />
             {children}
+            <SpeedInsights />
             <Suspense>
               <NavigationEvents />
             </Suspense>
