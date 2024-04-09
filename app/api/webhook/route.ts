@@ -16,11 +16,12 @@ export async function POST(req: Request) {
       process.env.STRIPE_WEBHOOK_SECRET! 
     );
   } catch (error: any) {
+    console.log(error)
     return new NextResponse(`Webhook Error: ${error.message}`, {
       status: 400,
     });
   }
-  // TODO: Remover clerk
+  
   const session = event.data.object as Stripe.Checkout.Session;
   const userId = session?.metadata?.userId;
   const courseId = session?.metadata?.courseId;
