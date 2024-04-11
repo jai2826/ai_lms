@@ -77,7 +77,7 @@ export const ChaptersList = ({
                         'bg-sky-100 border-sky-200 text-sky-700'
                     )}
                     ref={provided.innerRef}
-                    // {...provided.draggableProps}
+                    {...provided.draggableProps}
                   >
                     <div
                       className={cn(

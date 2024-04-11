@@ -132,7 +132,7 @@ export const SocialsList = ({
                         'flex items-center gap-x-2 bg-slate-200 border-slate-200 text-slate-700 rounded-md mb-4 text-sm '
                       )}
                       ref={provided.innerRef}
-                      // {...provided.draggableProps}
+                      {...provided.draggableProps}
                     >
                       <div
                         className={cn(
