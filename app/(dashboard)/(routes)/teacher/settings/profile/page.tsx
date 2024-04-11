@@ -29,6 +29,7 @@ import { Teacher } from '@prisma/client';
 import { HelpCircle, ImageIcon, Settings, Upload, XCircle } from 'lucide-react';
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 import { useEffect, useState, useTransition } from 'react';
 import { useForm } from 'react-hook-form';
@@ -41,12 +42,13 @@ const TeacherProfilePage = () => {
   const [error, setError] = useState<string | undefined>();
   const [isPending, startTransition] = useTransition();
   const teacher = useTeacher();
+  const router = useRouter();
   const form = useForm<z.infer<typeof TeacherProfileSchema>>({
     resolver: zodResolver(TeacherProfileSchema),
     defaultValues: {
       name: teacher?.name || undefined,
       email: teacher?.email || undefined,
-      phone: teacher?.phone || undefined,
+      phone: teacher?.phone || '',
       image: teacher?.image || undefined,
     },
   });
@@ -54,6 +56,16 @@ const TeacherProfilePage = () => {
   const onSubmit = (values: z.infer<typeof TeacherProfileSchema>) => {
     console.log(values);
     startTransition(() => {
+      if (
+        form.getValues('name') === teacher?.name &&
+        form.getValues('email') === teacher?.email &&
+        form.getValues('image') === teacher?.image &&
+        form.getValues('phone') === teacher?.phone
+      ) {
+        toast.success('All fields are up to data');
+        router.refresh();
+        return;
+      }
       TeacherProfile(values)
         .then((data) => {
           if (data.error) {
@@ -65,6 +77,7 @@ const TeacherProfilePage = () => {
             toast.success(data.success);
             setToggleEdit(false);
           }
+          router.refresh();
         })
         .catch(() => setError('Something went wrong!'));
     });
@@ -94,7 +107,9 @@ const TeacherProfilePage = () => {
                     <FormLabel className="flex items-center justify-between w-full">
                       <span className="text-xl">
                         Profile{' '}
-                        {form.getValues('image') !== teacher?.image && '🟢'}
+                        {form.getValues('image') !== teacher?.image &&
+                          form.getValues('image') !== undefined &&
+                          '🟢'}
                       </span>
                       {!toggleEdit ? (
                         <Button
@@ -225,10 +240,16 @@ const TeacherProfilePage = () => {
               <FormError message={error} />
 
               <span className="flex items-center space-x-2">
-                <Button type="submit">Save</Button>
+                <Button disabled={isPending} type="submit">
+                  Save
+                </Button>
                 <Button
                   onClick={() => {
-                    form.reset();
+                    form.setValue('name', teacher?.name || undefined);
+                    form.setValue('email', teacher?.email || undefined);
+                    form.setValue('image', teacher?.image || undefined);
+                    cancelImageForm();
+                    form.setValue('phone', teacher?.phone || '');
                   }}
                   type="button"
                 >

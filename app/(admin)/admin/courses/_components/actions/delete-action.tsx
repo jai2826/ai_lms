@@ -2,7 +2,6 @@
 import { ConfirmModal } from '@/components/modals/confirm-modal';
 import { Button } from '@/components/ui/button';
 import { useLoader } from '@/hooks/useloader';
-import { DropdownMenuItem } from '@radix-ui/react-dropdown-menu';
 import axios from 'axios';
 import { Trash } from 'lucide-react';
 import { useRouter } from 'next/navigation';

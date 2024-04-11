@@ -69,7 +69,9 @@ const SearchPage = async ({ searchParams }: SearchPageProps) => {
 
               <CoursesList items={courses} />
             </div>
-            <PreferredCoursesList items={preferredCourses} />
+            {!searchParams.categoryId && !searchParams.title && (
+              <PreferredCoursesList items={preferredCourses} />
+            )}
           </div>
         </>
       )}

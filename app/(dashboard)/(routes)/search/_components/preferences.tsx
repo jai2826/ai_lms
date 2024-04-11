@@ -72,7 +72,7 @@ export const Preference = ({ items }: ConfirmModalProps) => {
       await axios.post(`/api/user/${user?.id}/setpreference`, values);
       console.log('second');
 
-      toast.success('Chapter created');
+      toast.success('User Preference Updated');
 
       router.refresh();
     } catch (error) {

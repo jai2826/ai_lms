@@ -55,6 +55,15 @@ export const CourseSidebar = async ({
           />
         ))}
       </div>
+      <div className='p-2'>
+        <h1 className='text-2xl '>Prerequisites</h1>
+        To enroll in the course 
+        <ul>
+          <li>Test Card From stripe: 4000003560000008</li>
+          <li>Expiry Date: any, should be greater than 05/2024 </li>
+          <li>Rest data: any, of your choice </li>
+        </ul>
+      </div>
     </div>
   );
 };

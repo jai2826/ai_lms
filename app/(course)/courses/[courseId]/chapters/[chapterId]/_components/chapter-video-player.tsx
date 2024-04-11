@@ -2,6 +2,7 @@
 
 import { Player } from '@/components/video-player/player';
 import { useConfettiStore } from '@/hooks/useConfettiStore';
+import { useLoader } from '@/hooks/useloader';
 import axios from 'axios';
 import { Loader2, Lock } from 'lucide-react';
 import { useRouter } from 'next/navigation';
@@ -31,6 +32,7 @@ export const VideoPlayer = ({
   const [isReady, setIsReady] = useState(false);
   const router = useRouter();
   const confetti = useConfettiStore();
+  const loader = useLoader();
 
   const onEnd = async () => {
     try {
@@ -49,6 +51,7 @@ export const VideoPlayer = ({
       router.refresh();
 
       if (nextChapterId) {
+        loader.setValue(40);
         router.push(`/courses/${courseId}/chapters/${nextChapterId}`);
         router.refresh();
       }

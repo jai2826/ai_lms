@@ -1,4 +1,6 @@
 import { auth } from '@/auth';
+import { useCurrentUser } from '@/hooks/useCurrentUser';
+import { currentUser } from '@/lib/currentUser';
 import { db } from '@/lib/db';
 import { NextResponse } from 'next/server';
 
@@ -7,16 +9,15 @@ export async function PATCH(
   { params }: { params: { courseId: string; chapterId: string } }
 ) {
   try {
-    const session = await auth();
-  const userId = session?.user.id
-    if (!userId) {
+    const user = await currentUser();
+    if (!user || !user?.id) {
       return new NextResponse('Unauthorized', { status: 401 });
     }
 
     const ownCourse = await db.course.findUnique({
       where: {
         id: params.courseId,
-        userId,
+        userId: user.id,
       },
     });
     if (!ownCourse) {
@@ -30,15 +31,8 @@ export async function PATCH(
       },
     });
 
-    const muxData = await db.muxData.findUnique({
-      where: {
-        chapterId: params.chapterId,
-      },
-    });
-
     if (
       !chapter ||
-      !muxData ||
       !chapter.title ||
       !chapter.description ||
       !chapter.videoUrl
