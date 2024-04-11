@@ -25,7 +25,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { HelpCircle, ImageIcon, Settings, Upload, XCircle } from 'lucide-react';
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
+import { redirect, useRouter } from 'next/navigation';
 
 import { useState, useTransition } from 'react';
 import { useForm } from 'react-hook-form';
@@ -51,9 +51,18 @@ const ProfilePage = () => {
     },
   });
 
+  if (!user) {
+    return redirect('/');
+  }
+
   const onSubmit = (values: z.infer<typeof ProfileSchema>) => {
     startTransition(() => {
-      if (!form.formState.isDirty) {
+      if (
+        form.getValues('name') === user?.name &&
+        form.getValues('email') === user?.email &&
+        form.getValues('image') === user?.image &&
+        form.getValues('password') === undefined
+      ) {
         toast.success('All fields are up to data');
         router.refresh();
 
@@ -102,7 +111,9 @@ const ProfilePage = () => {
                     <FormLabel className="flex items-center justify-between w-full">
                       <span className="text-xl">
                         Profile{' '}
-                        {form.getValues('image') !== user?.image && '🟢'}
+                        {form.getValues('image') !== user?.image &&
+                          form.getValues('image') !== undefined &&
+                          '🟢'}
                       </span>
                       {!toggleEdit ? (
                         <Button
@@ -127,13 +138,13 @@ const ProfilePage = () => {
                       <>
                         {!toggleEdit &&
                           (!user?.image ? (
-                            <div className="flex items-center justify-center h-60 bg-slate-200 rounded-md">
+                            <div className="flex items-center justify-center  h-56 w-80 bg-slate-200 rounded-md">
                               <ImageIcon className="h-10 w-10" />
                             </div>
                           ) : (
                             <div className="relative h-40 w-40 mt-2 rounded-full overflow-hidden">
                               <Image
-                                alt="Upload"
+                                alt="User Profile"
                                 fill
                                 className="object-cover rounded-full"
                                 src={user.image}

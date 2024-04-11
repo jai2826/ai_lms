@@ -19,14 +19,14 @@ const adminRoutes = [
     href: '/admin/teacher',
   },
   {
-    icon: ScrollText,
-    label: 'Logs',
-    href: '/admin/logs',
-  },
-  {
     icon: BookOpen,
     label: 'Courses',
     href: '/admin/courses',
+  },
+  {
+    icon: ScrollText,
+    label: 'Logs',
+    href: '/admin/logs',
   },
 ];
 

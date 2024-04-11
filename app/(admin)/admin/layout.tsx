@@ -1,9 +1,10 @@
-
+'use client';
 import AdminNavbar from './_components/admin-navbar';
 import { AdminSidebar } from './_components/admin-sidebar';
-import { redirect, usePathname } from 'next/navigation';
+
 
 const AdminLayout = ({ children }: { children: React.ReactNode }) => {
+  
   return (
     <div className="h-full">
       <div className="h-[80px] md:pl-56 inset-y-0 w-full z-50">

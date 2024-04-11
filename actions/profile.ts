@@ -11,7 +11,7 @@ export const Profile = async (values: z.infer<typeof ProfileSchema>) => {
   if (!user) {
     return { error: 'Unauthorized' };
   }
-
+ 
   const dbUser = await getUserById(user.id!);
 
   if (!dbUser) {
