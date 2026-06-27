@@ -50,3 +50,25 @@ export async function POST(req: Request) {
     return new NextResponse('Internal Error', { status: 500 });
   }
 }
+
+export async function GET(req: Request) {
+  try {
+    const session = await auth();
+    const userId = session?.user.id;
+    if (!userId) {
+      return new NextResponse('Unauthorized', { status: 401 });
+    }
+
+    const teacher = await db.teacher.findUnique({
+      where: {
+        userId,
+      },
+    });
+
+    return NextResponse.json(teacher);
+  } catch (error) {
+    console.log('[TEACHER_GET]', error);
+    return new NextResponse('Internal Error', { status: 500 });
+  }
+}
+

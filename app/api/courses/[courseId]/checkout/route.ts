@@ -6,9 +6,10 @@ import { currentUser } from '@/lib/currentUser';
 
 export async function POST(
   req: Request,
-  { params }: { params: { courseId: string } }
+  context: { params: Promise<{ courseId: string }> }
 ) {
   try {
+    const params = await context.params;
     
     const user = await currentUser();
     if (!user || !user.id || !user.email) {

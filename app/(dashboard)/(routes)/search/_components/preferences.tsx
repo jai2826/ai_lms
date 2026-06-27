@@ -46,19 +46,18 @@ const iconMap: Record<Category['name'], IconType> = {
   'Game Design': FcPuzzle,
 };
 
+const FormSchema = z.object({
+  categories: z
+    .array(z.string())
+    .min(1, { message: 'You have to select at least one item.' }),
+});
+
 export const Preference = ({ items }: ConfirmModalProps) => {
   const user = useCurrentUser();
 
-  const FormSchema = z.object({
-    categories: z
-      .array(z.string())
-      .refine((value) => value.some((item) => item), {
-        message: 'You have to select at least one item.',
-      }),
-  });
-
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
+    mode: 'onChange',
     defaultValues: {
       categories: [],
     },
@@ -130,8 +129,12 @@ export const Preference = ({ items }: ConfirmModalProps) => {
                 }}
               />
             ))}
-            <FormMessage />
           </div>
+          {form.formState.errors.categories && (
+            <p className="text-sm font-medium text-destructive mb-4">
+              {form.formState.errors.categories.message}
+            </p>
+          )}
           <Button disabled={!form.formState.isValid} type="submit">
             Submit
           </Button>

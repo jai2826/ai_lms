@@ -5,9 +5,10 @@ import { auth } from '@/auth';
 
 export async function POST(
   req: Request,
-  { params }: { params: { courseId: string } }
+  context: { params: Promise<{ courseId: string }> }
 ) {
   try {
+    const params = await context.params;
     const session = await auth();
   const userId = session?.user.id
     const { url } = await req.json();

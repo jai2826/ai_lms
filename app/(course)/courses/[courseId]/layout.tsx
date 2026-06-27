@@ -5,13 +5,12 @@ import { redirect } from 'next/navigation';
 import { CourseSidebar } from './_components/course-sidebar';
 import { CourseNavbar } from './_components/course-Navbar';
 
-const CourseLayout = async ({
-  children,
-  params,
-}: {
+const CourseLayout = async (props: {
   children: React.ReactNode;
-  params: { courseId: string };
+  params: Promise<{ courseId: string }>;
 }) => {
+  const params = await props.params;
+  const { children } = props;
   const session = await auth();
   const userId = session?.user.id;
   if (!userId) {

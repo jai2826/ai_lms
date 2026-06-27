@@ -11,9 +11,10 @@ import { db } from '@/lib/db';
 
 export async function DELETE(
   req: Request,
-  { params }: { params: { courseId: string } }
+  context: { params: Promise<{ courseId: string }> }
 ) {
   try {
+    const params = await context.params;
     const session = await auth();
 
     const teacher = await currentTeacher();
@@ -63,9 +64,10 @@ export async function DELETE(
 
 export async function PATCH(
   req: Request,
-  { params }: { params: { courseId: string } }
+  context: { params: Promise<{ courseId: string }> }
 ) {
   try {
+    const params = await context.params;
     const session = await auth();
     const userId = session?.user.id;
     const values = await req.json();

@@ -22,7 +22,8 @@ import { getTeacherByUserId } from '@/data/teacher';
 import { IntroForm } from './_components/intro-form';
 import { SocialsForm } from './_components/soicals-form';
 
-const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
+const CourseIdPage = async (props: { params: Promise<{ courseId: string }> }) => {
+  const params = await props.params;
   const session = await auth();
   const userId = session?.user.id;
 

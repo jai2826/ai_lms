@@ -1,9 +1,9 @@
-import { auth } from '@/auth';
+import { currentUser } from './currentUser';
 import { getTeacherByUserId } from '@/data/teacher';
 
 export const currentTeacher = async () => {
-  const session = await auth();
-  if (!session?.user.id) return;
-  const teacher = await getTeacherByUserId(session?.user.id);
+  const user = await currentUser();
+  if (!user?.id) return;
+  const teacher = await getTeacherByUserId(user.id);
   return teacher;
 };

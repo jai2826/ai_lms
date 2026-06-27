@@ -9,7 +9,7 @@ type LoaderStore = {
   setIsloading: (value: boolean) => void;
 };
 
-export const useLoader = create<LoaderStore>((set) => ({
+export const useLoader = create<LoaderStore>()((set) => ({
   isLoading: false,
   value: 0,
   setValue: (newValue) => set({ isLoading: true, value: newValue }),

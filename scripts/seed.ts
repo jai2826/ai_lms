@@ -1,10 +1,11 @@
-const { PrismaClient } = require('@prisma/client');
-const database = new PrismaClient();
-const db = new PrismaClient();
+// Use the relative path directly
+import { db } from '../lib/db';
+
+; // Update the path to wherever you saved the code you just shared
 
 async function main() {
   try {
-    const category = await database.category.createMany({
+    const category = await db.category.createMany({
       data: [
         { name: 'Computer Science' },
         { name: 'Music' },
@@ -15,40 +16,14 @@ async function main() {
         { name: 'Filming' },
         { name: 'Game Design' },
       ],
+      skipDuplicates: true, // Prevents errors if you run it twice
     });
-    // const socialType = await database.socialsType.createMany({
-    //   data: [
-    //     // 
-    //   ],
-    // });
-    if (category) console.log(category, 'Success');
-    // if (socialType) console.log(socialType, 'Success');
+    console.log('Success:', category);
   } catch (error) {
-    console.log('Error seeding the database categories', error);
+    console.error('Error seeding categories:', error);
   } finally {
-    await database.$disconnect;
+    await db.$disconnect();
   }
 }
 
 main();
-
-
-
-// async function Test() {
-//   try {
-//     const topic = await database.topic.createMany({
-//       data: [
-//        {name:'Nextjs', categoryId:''}
-//       ],
-//     });
-    
-//     if (topic) console.log(topic, 'Success');
-//     // if (socialType) console.log(socialType, 'Success');
-//   } catch (error) {
-//     console.log('Error seeding the database categories', error);
-//   } finally {
-//     await database.$disconnect;
-//   }
-// }
-
-// Test();

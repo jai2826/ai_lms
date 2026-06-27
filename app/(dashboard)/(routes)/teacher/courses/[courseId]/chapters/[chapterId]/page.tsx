@@ -11,11 +11,10 @@ import { ChapterVideoForm } from './_components/chapter-video-form';
 import { Banner } from '@/components/banner';
 import { ChapterActions } from './_components/chapter-actions';
 
-const ChapterIdPage = async ({
-  params,
-}: {
-  params: { courseId: string; chapterId: string };
+const ChapterIdPage = async (props: {
+  params: Promise<{ courseId: string; chapterId: string }>;
 }) => {
+  const params = await props.params;
   const session = await auth();
   const userId = session?.user.id
   if (!userId) {

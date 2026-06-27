@@ -1,12 +1,20 @@
-import { signOut } from 'next-auth/react';
+import { authClient } from '@/lib/auth-client';
+import { useRouter } from 'next/navigation';
 
 interface LogoutButtonProps {
   children?: React.ReactNode;
 }
 
 export const LogoutButton = ({ children }: LogoutButtonProps) => {
-  const onClick = () => {
-    signOut();
+  const router = useRouter();
+  const onClick = async () => {
+    await authClient.signOut({
+      fetchOptions: {
+        onSuccess: () => {
+          router.push('/auth/login');
+        },
+      },
+    });
   };
 
   return (

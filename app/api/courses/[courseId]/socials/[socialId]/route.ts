@@ -4,9 +4,10 @@ import { NextResponse } from "next/server";
 
 export async function DELETE(
   req: Request,
-  { params }: { params: { courseId: string, socialId: string } }
+  context: { params: Promise<{ courseId: string; socialId: string }> }
 ) {
   try {
+    const params = await context.params;
     const teacher = await currentTeacher();
     if (!teacher || !teacher.id) {
       return new NextResponse('Unauthorized', { status: 401 });

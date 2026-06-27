@@ -32,7 +32,6 @@ import {
 } from 'react-icons/fa6';
 import { CourseVideoPlayer } from './_components/course-video-player';
 import { CourseEnrollButton } from './chapters/[chapterId]/_components/course-enroll-button';
-import { useEffect } from 'react';
 
 const iconMap: Record<SocialsType['name'], IconType> = {
   Github: FaGithub,
@@ -61,7 +60,8 @@ const colorMap: Record<SocialsType['name'], string> = {
   Snapchat: 'text-[#FFFC00] ',
 };
 
-const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
+const CourseIdPage = async (props: { params: Promise<{ courseId: string }> }) => {
+  const params = await props.params;
   const course = await db.course.findUnique({
     where: {
       id: params.courseId,

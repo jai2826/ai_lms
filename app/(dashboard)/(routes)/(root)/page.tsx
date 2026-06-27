@@ -1,15 +1,15 @@
 import { getDashboardCourses } from '@/actions/get-dashboard-courses';
+import { auth } from '@/auth';
 import { CoursesList } from '@/components/courses-list';
 import { CheckCircle, Clock } from 'lucide-react';
 import { redirect } from 'next/navigation';
 import { InfoCard } from './_components/info-card';
-import { auth } from '@/auth';
 
 export default async function Dashboard() {
   const session = await auth();
   const userId = session?.user.id;
   if (!userId) {
-    return redirect('/auth/signin');
+    return redirect('/auth/sign-in');
   }
   const { completedCourses, coursesInProgress } = await getDashboardCourses(
     userId

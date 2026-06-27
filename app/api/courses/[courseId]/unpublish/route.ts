@@ -4,9 +4,10 @@ import { NextResponse } from 'next/server';
 
 export async function PATCH(
   req: Request,
-  { params }: { params: { courseId: string } }
+  context: { params: Promise<{ courseId: string }> }
 ) {
   try {
+    const params = await context.params;
     const session = await auth();
   const userId = session?.user.id
     if (!userId) {

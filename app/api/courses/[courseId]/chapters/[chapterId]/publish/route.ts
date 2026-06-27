@@ -6,9 +6,10 @@ import { NextResponse } from 'next/server';
 
 export async function PATCH(
   req: Request,
-  { params }: { params: { courseId: string; chapterId: string } }
+  context: { params: Promise<{ courseId: string; chapterId: string }> }
 ) {
   try {
+    const params = await context.params;
     const user = await currentUser();
     if (!user || !user?.id) {
       return new NextResponse('Unauthorized', { status: 401 });

@@ -5,9 +5,10 @@ import { NextResponse } from 'next/server';
 
 export async function POST(
   req: Request,
-  { params }: { params: { courseId: string } }
+  context: { params: Promise<{ courseId: string }> }
 ) {
   try {
+    const params = await context.params;
     const { title } = await req.json();
 
     const teacher = await currentTeacher();

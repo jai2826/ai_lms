@@ -6,17 +6,17 @@ import { allTeacherData } from '@/data/all-users-data';
 import { useLoader } from '@/hooks/useloader';
 import { Teacher } from '@prisma/client';
 import { LogOut } from 'lucide-react';
-import { useSession } from 'next-auth/react';
+import { useCurrentUser } from '@/hooks/useCurrentUser';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 export const AdminNavbarRoutes = () => {
   const [teacher, setTeacher] = useState<Teacher | null>(null);
-  const session = useSession();
+  const user = useCurrentUser();
   const loader = useLoader();
   const router = useRouter();
-  const userId = session.data?.user.id;
+  const userId = user?.id;
 
   useEffect(() => {
     const fetchTeacher = async () => {

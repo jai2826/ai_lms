@@ -1,14 +1,17 @@
-import { auth } from '@/auth';
 import { ConfettiProvider } from '@/components/providers/confetti-provider';
 import { ToastProvider } from '@/components/providers/toaster-provider';
 import { Loader } from '@/components/top-loading-bar';
 import type { Metadata } from 'next';
-import { SessionProvider } from 'next-auth/react';
-import { Inter } from 'next/font/google';
+import { Inter, Geist } from 'next/font/google';
 import './globals.css';
 import { NavigationEvents } from '@/components/navigation';
 import { Suspense } from 'react';
 import { SpeedInsights } from '@vercel/speed-insights/next';
+import { cn } from "@/lib/utils";
+import { Providers } from '@/components/providers/provider';
+
+const geist = Geist({subsets:['latin'],variable:'--font-sans'});
+
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
@@ -21,11 +24,9 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const session = await auth();
-
   return (
-    <SessionProvider session={session}>
-      <html lang="en">
+    <Providers>
+      <html lang="en" className={cn("font-sans", geist.variable)}>
         <body className={inter.className}>
           <>
             <Loader />
@@ -39,6 +40,6 @@ export default async function RootLayout({
           </>
         </body>
       </html>
-    </SessionProvider>
+    </Providers>
   );
 }

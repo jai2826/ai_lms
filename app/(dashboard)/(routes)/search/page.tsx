@@ -8,14 +8,17 @@ import { CoursesList } from '@/components/courses-list';
 import { Preference } from './_components/preferences';
 import { PreferredCoursesList } from '@/components/preferred-courses-list';
 
+import { Suspense } from 'react';
+
 interface SearchPageProps {
-  searchParams: {
+  searchParams: Promise<{
     title: string;
     categoryId: string;
-  };
+  }>;
 }
 
-const SearchPage = async ({ searchParams }: SearchPageProps) => {
+const SearchPage = async (props: SearchPageProps) => {
+  const searchParams = await props.searchParams;
   const session = await auth();
 
   const userId = session?.user.id;
@@ -54,7 +57,11 @@ const SearchPage = async ({ searchParams }: SearchPageProps) => {
   // });
 
   return (
-    <>
+    <Suspense fallback={
+      <div className="flex items-center justify-center min-h-100">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600" />
+      </div>
+    }>
       {categoryPreference.length === 0 ? (
         <Preference items={categories} />
       ) : (
@@ -75,7 +82,7 @@ const SearchPage = async ({ searchParams }: SearchPageProps) => {
           </div>
         </>
       )}
-    </>
+    </Suspense>
   );
 };
 

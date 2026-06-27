@@ -78,6 +78,7 @@ export const ChaptersList = ({
                     )}
                     ref={provided.innerRef}
                     {...provided.draggableProps}
+                    style={provided.draggableProps.style as React.CSSProperties}
                   >
                     <div
                       className={cn(

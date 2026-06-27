@@ -9,9 +9,10 @@ import { NextResponse } from 'next/server';
 
 export async function DELETE(
   req: Request,
-  { params }: { params: { teacherId: string } }
+  context: { params: Promise<{ teacherId: string }> }
 ) {
   try {
+    const params = await context.params;
     const session = await auth();
     const userId = session?.user.id;
     const { teacherId } = params;
@@ -45,9 +46,10 @@ export async function DELETE(
 
 export async function PATCH(
   req: Request,
-  { params }: { params: { teacherId: string } }
+  context: { params: Promise<{ teacherId: string }> }
 ) {
   try {
+    const params = await context.params;
     const session = await auth();
     const userId = session?.user.id;
     const { teacherId } = params;

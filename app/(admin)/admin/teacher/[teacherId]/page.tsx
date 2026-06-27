@@ -18,7 +18,8 @@ import { ImageForm } from './_components/image-form';
 import { EmailForm } from './_components/email-form';
 import { PhoneNumberForm } from './_components/phone-number-form';
 
-const TeacherIdPage = async ({ params }: { params: { teacherId: string } }) => {
+const TeacherIdPage = async (props: { params: Promise<{ teacherId: string }> }) => {
+  const params = await props.params;
   const session = await auth();
   const userId = session?.user.id;
 

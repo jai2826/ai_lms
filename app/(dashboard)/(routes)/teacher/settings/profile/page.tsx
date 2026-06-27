@@ -27,7 +27,6 @@ import { TeacherProfileSchema } from '@/schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Teacher } from '@prisma/client';
 import { HelpCircle, ImageIcon, Settings, Upload, XCircle } from 'lucide-react';
-import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
@@ -37,7 +36,6 @@ import toast from 'react-hot-toast';
 import * as z from 'zod';
 
 const TeacherProfilePage = () => {
-  const { update } = useSession();
   const [toggleEdit, setToggleEdit] = useState<boolean>(false);
   const [error, setError] = useState<string | undefined>();
   const [isPending, startTransition] = useTransition();
@@ -73,11 +71,10 @@ const TeacherProfilePage = () => {
             form.reset();
           }
           if (data.success) {
-            update();
             toast.success(data.success);
             setToggleEdit(false);
+            window.location.reload();
           }
-          router.refresh();
         })
         .catch(() => setError('Something went wrong!'));
     });

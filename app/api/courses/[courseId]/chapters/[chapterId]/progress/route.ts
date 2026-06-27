@@ -5,9 +5,10 @@ import { auth } from '@/auth';
 
 export async function PUT(
   req: Request,
-  { params }: { params: { courseId: string; chapterId: string } }
+  context: { params: Promise<{ courseId: string; chapterId: string }> }
 ) {
   try {
+    const params = await context.params;
     const session = await auth();
   const userId = session?.user.id
     const { isCompleted } = await req.json();
