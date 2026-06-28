@@ -1,17 +1,17 @@
-import { MainSidebar } from "./_components/DashboardSidebar";
-import { Navbar } from "./_components/navbar";
+
+import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
+import { DashboardSidebar } from "./_components/DashboardSidebar";
+import { DashboardNavbar } from "./_components/DashboardNavbar";
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className="h-full">
-      <div className="h-20 md:pl-56 inset-y-0 w-full z-50">
-        <Navbar />
-      </div>
-      <div className="hidden md:flex h-full flex-col w-56 fixed inset-y-0 z-50">
-        <MainSidebar />
-      </div>
-      <main className="md:pl-56 ">{children}</main>
-    </div>
+    <SidebarProvider>
+      <DashboardSidebar />
+      <SidebarInset className="flex flex-col min-h-screen">
+        <DashboardNavbar />
+        <main className="flex-1">{children}</main>
+      </SidebarInset>
+    </SidebarProvider>
   );
 };
 

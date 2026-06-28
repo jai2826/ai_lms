@@ -3,13 +3,12 @@
 import { Button } from '@/components/ui/button';
 import { Combobox } from '@/components/ui/combobox-legacy';
 import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/components/ui/form';
+  Field,
+  FieldLabel,
+  FieldDescription,
+  FieldError,
+  FieldContent,
+} from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -18,7 +17,7 @@ import axios from 'axios';
 import { Loader2, PlusCircle } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import * as z from 'zod';
 import { SocialsList } from './socials-list';
@@ -161,90 +160,97 @@ export const SocialsForm = ({
       </div>
 
       {isCreating && (
-        <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(onSubmit)}
-            className="space-y-4 mt-4"
-          >
-            <FormField
-              control={form.control}
-              name="name"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-base flex items-center">
-                    Name
-                  </FormLabel>
-                  <FormControl>
-                    <Input
-                      disabled={isSubmitting}
-                      placeholder="e.g. 'Social 1' "
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="link"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-base flex items-center">
-                    Link
-                  </FormLabel>
-                  <FormControl>
-                    <Input
-                      disabled={isSubmitting}
-                      placeholder="e.g. 'https://SocialLink1.com' "
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="socialsTypeId"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-base flex items-center">
-                    Social Type
-                  </FormLabel>
-                  <FormControl>
-                    <Combobox options={options} {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="isLocked"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-base flex items-center">
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="space-y-4 mt-4"
+        >
+          <Controller
+            control={form.control}
+            name="name"
+            render={({ field, fieldState }) => (
+              <Field data-invalid={fieldState.invalid}>
+                <FieldLabel htmlFor={field.name} className="text-sm font-medium">
+                  Name
+                </FieldLabel>
+                <Input
+                  disabled={isSubmitting}
+                  placeholder="e.g. 'Social 1'"
+                  id={field.name}
+                  aria-invalid={fieldState.invalid}
+                  {...field}
+                />
+                {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+              </Field>
+            )}
+          />
+
+          <Controller
+            control={form.control}
+            name="link"
+            render={({ field, fieldState }) => (
+              <Field data-invalid={fieldState.invalid}>
+                <FieldLabel htmlFor={field.name} className="text-sm font-medium">
+                  Link
+                </FieldLabel>
+                <Input
+                  disabled={isSubmitting}
+                  placeholder="e.g. 'https://SocialLink1.com'"
+                  id={field.name}
+                  aria-invalid={fieldState.invalid}
+                  {...field}
+                />
+                {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+              </Field>
+            )}
+          />
+
+          <Controller
+            control={form.control}
+            name="socialsTypeId"
+            render={({ field, fieldState }) => (
+              <Field data-invalid={fieldState.invalid}>
+                <FieldLabel htmlFor={field.name} className="text-sm font-medium">
+                  Social Type
+                </FieldLabel>
+                <Combobox
+                  options={options}
+                  value={field.value}
+                  onChange={field.onChange}
+                />
+                {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+              </Field>
+            )}
+          />
+
+          <Controller
+            control={form.control}
+            name="isLocked"
+            render={({ field, fieldState }) => (
+              <Field orientation="horizontal" data-invalid={fieldState.invalid}>
+                <FieldContent>
+                  <FieldLabel htmlFor={field.name} className="text-sm font-medium">
                     Locked
-                  </FormLabel>
-                  <FormControl>
-                    <Switch
-                      checked={field.value}
-                      onCheckedChange={field.onChange}
-                    />
-                  </FormControl>
-                  <p className="text-muted-foreground text-xs">
+                  </FieldLabel>
+                  <FieldDescription className="text-xs">
                     If Locked, only Enrolled user can access this social
-                  </p>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <Button disabled={!isValid || isSubmitting} type="submit">
-              {form.getValues('id') ? 'Save' : 'Create'}
-            </Button>
-          </form>
-        </Form>
+                  </FieldDescription>
+                  {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+                </FieldContent>
+                <Switch
+                  id={field.name}
+                  name={field.name}
+                  checked={field.value}
+                  onCheckedChange={field.onChange}
+                  aria-invalid={fieldState.invalid}
+                />
+              </Field>
+            )}
+          />
+
+          <Button disabled={!isValid || isSubmitting} type="submit">
+            {form.getValues('id') ? 'Save' : 'Create'}
+          </Button>
+        </form>
       )}
       {!isCreating && (
         <div

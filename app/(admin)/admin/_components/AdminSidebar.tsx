@@ -4,10 +4,10 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
   BarChart,
-  Compass,
-  LayoutDashboard,
+  BookOpen,
   List,
-  Settings,
+  ScrollText,
+  SquareUser,
 } from "lucide-react";
 
 import {
@@ -22,19 +22,24 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
-import Logo from "./logo";
+import Logo from "@/app/(dashboard)/_components/logo";
 import { cn } from "@/lib/utils";
 
-const guestRoutes = [
+const adminRoutes = [
   {
-    icon: LayoutDashboard,
-    label: "Dashboard",
-    href: "/",
+    icon: SquareUser,
+    label: "Teacher",
+    href: "/admin/teacher",
   },
   {
-    icon: Compass,
-    label: "Browse",
-    href: "/search",
+    icon: BookOpen,
+    label: "Courses",
+    href: "/admin/courses",
+  },
+  {
+    icon: ScrollText,
+    label: "Logs",
+    href: "/admin/logs",
   },
 ];
 
@@ -49,20 +54,16 @@ const teacherRoutes = [
     label: "Analytics",
     href: "/teacher/analytics",
   },
-  {
-    icon: Settings,
-    label: "Settings",
-    href: "/teacher/settings",
-  },
 ];
 
-export function DashboardSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+export function AdminSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const pathname = usePathname();
   const { state } = useSidebar();
   const isCollapsed = state === "collapsed";
   
-  const isTeacherPage = pathname?.startsWith("/teacher");
-  const routes = isTeacherPage ? teacherRoutes : guestRoutes;
+  const isTeacherPage =
+    pathname?.includes("/teacher") && !pathname?.includes("/admin");
+  const routes = isTeacherPage ? teacherRoutes : adminRoutes;
 
   return (
     <Sidebar collapsible="icon" {...props}>
@@ -74,7 +75,7 @@ export function DashboardSidebar({ ...props }: React.ComponentProps<typeof Sideb
           <Logo />
         ) : (
           <div className="font-bold text-xl text-primary animate-in fade-in-0 duration-200">
-            C
+            A
           </div>
         )}
       </SidebarHeader>
@@ -82,7 +83,7 @@ export function DashboardSidebar({ ...props }: React.ComponentProps<typeof Sideb
         <SidebarGroup>
           {!isCollapsed && (
             <SidebarGroupLabel className="px-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider animate-in fade-in-0 duration-200">
-              {isTeacherPage ? "Teacher Mode" : "Student Mode"}
+              {isTeacherPage ? "Teacher Mode" : "Admin Mode"}
             </SidebarGroupLabel>
           )}
           <SidebarGroupContent className="mt-2">

@@ -1,22 +1,16 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormMessage,
-} from '@/components/ui/form';
+import { Field, FieldError } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Chapter, Course } from '@prisma/client';
 import axios from 'axios';
-import { Loader2, Pencil, PlusCircle } from 'lucide-react';
+import { Loader2, PlusCircle } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import * as z from 'zod';
 import { ChaptersList } from './chapters-list';
@@ -50,13 +44,12 @@ export const ChaptersForm = ({ initialData, courseId }: ChaptersFormProps) => {
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       await axios.post(`/api/courses/${courseId}/chapters`, values);
-      
       toast.success('Chapter created');
       toggleCreating();
       router.refresh();
     } catch (error) {
       toast.error('Something went wrong');
-      console.log(error)
+      console.log(error);
     }
   };
 
@@ -66,7 +59,6 @@ export const ChaptersForm = ({ initialData, courseId }: ChaptersFormProps) => {
       await axios.put(`/api/courses/${courseId}/chapters/reorder`, {
         list: updateData,
       });
-
       toast.success('Chapters reordered');
     } catch (error) {
       toast.error('Something went wrong');
@@ -78,6 +70,7 @@ export const ChaptersForm = ({ initialData, courseId }: ChaptersFormProps) => {
   const onEdit = (id: string) => {
     router.push(`/teacher/courses/${courseId}/chapters/${id}`);
   };
+
   return (
     <div className="relative mt-6 border bg-slate-100 rounded-md p-4">
       {isUpdating && (
@@ -100,32 +93,30 @@ export const ChaptersForm = ({ initialData, courseId }: ChaptersFormProps) => {
       </div>
 
       {isCreating && (
-        <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(onSubmit)}
-            className="space-y-4 mt-4"
-          >
-            <FormField
-              control={form.control}
-              name="title"
-              render={({ field }) => (
-                <FormItem>
-                  <FormControl>
-                    <Input
-                      disabled={isSubmitting}
-                      placeholder="e.g. 'Introduction to the Course' "
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <Button disabled={!isValid || isSubmitting} type="submit">
-              Create
-            </Button>
-          </form>
-        </Form>
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="space-y-4 mt-4"
+        >
+          <Controller
+            control={form.control}
+            name="title"
+            render={({ field, fieldState }) => (
+              <Field data-invalid={fieldState.invalid}>
+                <Input
+                  disabled={isSubmitting}
+                  placeholder="e.g. 'Introduction to the Course'"
+                  id={field.name}
+                  aria-invalid={fieldState.invalid}
+                  {...field}
+                />
+                {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+              </Field>
+            )}
+          />
+          <Button disabled={!isValid || isSubmitting} type="submit">
+            Create
+          </Button>
+        </form>
       )}
       {!isCreating && (
         <div

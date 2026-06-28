@@ -1,18 +1,13 @@
 'use client';
 
-import { Editor } from '@/components/editor';
-import { Preview } from '@/components/preview';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormMessage,
-} from '@/components/ui/form';
-import { Textarea } from '@/components/ui/textarea';
+  Field,
+  FieldDescription,
+  FieldError,
+  FieldContent,
+} from '@/components/ui/field';
 import { cn } from '@/lib/utils';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Chapter } from '@prisma/client';
@@ -20,7 +15,7 @@ import axios from 'axios';
 import { Pencil } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import * as z from 'zod';
 
@@ -42,7 +37,7 @@ export const ChapterAccessForm = ({
   const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(formSchema) as any,
     defaultValues: {
       isFree: Boolean(initialData.isFree),
     },
@@ -82,52 +77,51 @@ export const ChapterAccessForm = ({
         </Button>
       </div>
       {!isEditing && (
-        <div
+        <p
           className={cn(
             'text-sm mt-2 ',
             !initialData.isFree && 'text-slate-500 italic'
           )}
         >
           {initialData.isFree ? (
-            <>This chapter is free for preview</>
+            <>This chapter is free for preview.</>
           ) : (
-            <>This chpater is not free</>
+            <>This chapter is not free.</>
           )}
-        </div>
+        </p>
       )}
       {isEditing && (
-        <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(onSubmit)}
-            className="space-y-4 mt-4"
-          >
-            <FormField
-              control={form.control}
-              name="isFree"
-              render={({ field }) => (
-                <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
-                  <FormControl>
-                    <Checkbox
-                      checked={field.value}
-                      onCheckedChange={field.onChange}
-                    />
-                  </FormControl>
-                  <div className="space-y-1 leading-none">
-                    <FormDescription>
-                      Check this box if you want to make this chapter free for
-                      preview
-                    </FormDescription>
-                  </div>
-                </FormItem>
-              )}
-            />
-            <div className="flex items-center gap-x-2 ">
-              <Button disabled={!isValid || isSubmitting} type="submit">
-                Save
-              </Button>
-            </div>
-          </form>
-        </Form>
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="space-y-4 mt-4"
+        >
+          <Controller
+            control={form.control}
+            name="isFree"
+            render={({ field, fieldState }) => (
+              <Field orientation="horizontal" data-invalid={fieldState.invalid} className="rounded-md border p-4 space-x-3 space-y-0">
+                <Checkbox
+                  id={field.name}
+                  name={field.name}
+                  checked={field.value}
+                  onCheckedChange={field.onChange}
+                  aria-invalid={fieldState.invalid}
+                />
+                <FieldContent>
+                  <FieldDescription className="text-sm">
+                    Check this box if you want to make this chapter free for preview
+                  </FieldDescription>
+                  {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+                </FieldContent>
+              </Field>
+            )}
+          />
+          <div className="flex items-center gap-x-2 ">
+            <Button disabled={!isValid || isSubmitting} type="submit">
+              Save
+            </Button>
+          </div>
+        </form>
       )}
     </div>
   );

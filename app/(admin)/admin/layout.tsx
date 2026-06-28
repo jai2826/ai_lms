@@ -1,20 +1,18 @@
 'use client';
-import AdminNavbar from './_components/admin-navbar';
-import { AdminSidebar } from './_components/admin-sidebar';
 
+import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
+import { AdminSidebar } from "./_components/AdminSidebar";
+import { AdminNavbar } from "./_components/AdminNavbar";
 
 const AdminLayout = ({ children }: { children: React.ReactNode }) => {
-  
   return (
-    <div className="h-full">
-      <div className="h-[80px] md:pl-56 inset-y-0 w-full z-50">
+    <SidebarProvider>
+      <AdminSidebar />
+      <SidebarInset className="flex flex-col min-h-screen">
         <AdminNavbar />
-      </div>
-      <div className="hidden md:flex h-full flex-col w-56 fixed inset-y-0 z-50">
-        <AdminSidebar />
-      </div>
-      <main className="md:pl-56 h-full ">{children}</main>
-    </div>
+        <main className="flex-1">{children}</main>
+      </SidebarInset>
+    </SidebarProvider>
   );
 };
 

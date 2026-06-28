@@ -1,16 +1,16 @@
-'use client';
+"use client";
 
-import { Suspense } from 'react';
-import { usePathname, useRouter } from 'next/navigation';
-import { Button } from './ui/button';
-import { LogOut } from 'lucide-react';
-import Link from 'next/link';
-import { SearchInput } from './search-input';
+import { Suspense } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import { Button } from "./ui/button";
+import { LogOut } from "lucide-react";
+import Link from "next/link";
+import { SearchInput } from "./search-input";
 
-import { useCurrentUser } from '@/hooks/useCurrentUser';
-import { useLoader } from '@/hooks/useloader';
-import { useTeacher } from '@/hooks/useTeacher';
-import { UserButton } from '@/components/auth/user/user-button';
+import { useCurrentUser } from "@/hooks/useCurrentUser";
+import { useLoader } from "@/hooks/useloader";
+import { useTeacher } from "@/hooks/useTeacher";
+import { UserButton } from "@/components/auth/user/user-button";
 
 export const NavbarRoutes = () => {
   const user = useCurrentUser();
@@ -19,13 +19,14 @@ export const NavbarRoutes = () => {
 
   if (teacher?.userId !== userId) teacher = undefined;
 
-  const isAdmin = user?.role === 'ADMIN';
+  const isAdmin = user?.role === "ADMIN";
   const pathname = usePathname();
-  const isTeacherPage = pathname?.startsWith('/teacher');
+  const isTeacherPage = pathname?.startsWith("/teacher");
   const isCoursePage =
-    pathname?.includes('/courses') && !pathname?.startsWith('/admin');
+    pathname?.includes("/courses") &&
+    !pathname?.startsWith("/admin");
 
-  const isSearchPage = pathname === '/search';
+  const isSearchPage = pathname === "/search";
   const router = useRouter();
   const loader = useLoader();
   return (
@@ -38,16 +39,15 @@ export const NavbarRoutes = () => {
         </div>
       )}
       {
-        <div className="flex gap-x-2 ml-auto">
+        <div className="flex items-center text-2xl gap-x-2 ml-auto">
           {(isTeacherPage || isCoursePage) && (
             <Button
               onClick={() => {
                 loader.setValue(40);
-                router.push('/search');
+                router.push("/search");
               }}
-              size={'sm'}
-              variant={'ghost'}
-            >
+              className="text-lg"
+              variant={"ghost"}>
               <LogOut className="h-4 w-4" />
               Exit
             </Button>
@@ -56,11 +56,10 @@ export const NavbarRoutes = () => {
             <Button
               onClick={() => {
                 loader.setValue(40);
-                router.push('/teacher/courses');
+                router.push("/teacher/courses");
               }}
-              size="sm"
-              variant="ghost"
-            >
+              className="text-lg"
+              variant="ghost">
               Teacher mode
             </Button>
           )}
@@ -69,11 +68,10 @@ export const NavbarRoutes = () => {
             <Button
               onClick={() => {
                 loader.setValue(40);
-                router.push('/admin/teacher');
+                router.push("/admin/teacher");
               }}
-              size="sm"
-              variant="ghost"
-            >
+              className="text-lg"
+              variant="ghost">
               Admin mode
             </Button>
           )}

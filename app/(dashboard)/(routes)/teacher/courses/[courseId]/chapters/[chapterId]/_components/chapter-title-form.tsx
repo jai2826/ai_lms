@@ -1,20 +1,14 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormMessage,
-} from '@/components/ui/form';
+import { Field, FieldError } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
 import { zodResolver } from '@hookform/resolvers/zod';
 import axios from 'axios';
 import { Pencil } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import * as z from 'zod';
 
@@ -77,34 +71,32 @@ export const ChapterTitleForm = ({
       </div>
       {!isEditing && <p className="text-sm mt-2">{initialData.title}</p>}
       {isEditing && (
-        <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(onSubmit)}
-            className="space-y-4 mt-4"
-          >
-            <FormField
-              control={form.control}
-              name="title"
-              render={({ field }) => (
-                <FormItem>
-                  <FormControl>
-                    <Input
-                      disabled={isSubmitting}
-                      placeholder="e.g. 'Introduction to the course' "
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <div className="flex items-center gap-x-2 ">
-              <Button disabled={!isValid || isSubmitting} type="submit">
-                Save
-              </Button>
-            </div>
-          </form>
-        </Form>
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="space-y-4 mt-4"
+        >
+          <Controller
+            control={form.control}
+            name="title"
+            render={({ field, fieldState }) => (
+              <Field data-invalid={fieldState.invalid}>
+                <Input
+                  disabled={isSubmitting}
+                  placeholder="e.g. 'Introduction to the course'"
+                  id={field.name}
+                  aria-invalid={fieldState.invalid}
+                  {...field}
+                />
+                {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+              </Field>
+            )}
+          />
+          <div className="flex items-center gap-x-2 ">
+            <Button disabled={!isValid || isSubmitting} type="submit">
+              Save
+            </Button>
+          </div>
+        </form>
       )}
     </div>
   );

@@ -3,20 +3,17 @@
 import * as z from "zod";
 import axios from "axios";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import toast from "react-hot-toast";
 
 import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormLabel,
-  FormMessage,
-  FormItem,
-} from "@/components/ui/form";
+  Field,
+  FieldLabel,
+  FieldDescription,
+  FieldError,
+} from "@/components/ui/field";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
@@ -56,51 +53,49 @@ const CreatePage = () => {
         <p className="text-sm text-slate-600">
           What would you like to name your course? Don&apos;t worry, you can change this later.
         </p>
-        <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(onSubmit)}
-            className="space-y-8 mt-8"
-          >
-            <FormField
-              control={form.control}
-              name="title"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>
-                    Course title
-                  </FormLabel>
-                  <FormControl>
-                    <Input
-                      disabled={isSubmitting}
-                      placeholder="e.g. 'Advanced web development'"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormDescription>
-                    What will you teach in this course?
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <div className="flex items-center gap-x-2">
-              <Link href="/">
-                <Button
-                  type="button"
-                  variant="ghost"
-                >
-                  Cancel
-                </Button>
-              </Link>
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="space-y-8 mt-8"
+        >
+          <Controller
+            name="title"
+            control={form.control}
+            render={({ field, fieldState }) => (
+              <Field data-invalid={fieldState.invalid}>
+                <FieldLabel htmlFor={field.name}>
+                  Course title
+                </FieldLabel>
+                <Input
+                  disabled={isSubmitting}
+                  placeholder="e.g. 'Advanced web development'"
+                  id={field.name}
+                  aria-invalid={fieldState.invalid}
+                  {...field}
+                />
+                <FieldDescription>
+                  What will you teach in this course?
+                </FieldDescription>
+                {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+              </Field>
+            )}
+          />
+          <div className="flex items-center gap-x-2">
+            <Link href="/">
               <Button
-                type="submit"
-                disabled={!isValid || isSubmitting}
+                type="button"
+                variant="ghost"
               >
-                Continue
+                Cancel
               </Button>
-            </div>
-          </form>
-        </Form>
+            </Link>
+            <Button
+              type="submit"
+              disabled={!isValid || isSubmitting}
+            >
+              Continue
+            </Button>
+          </div>
+        </form>
       </div>
     </div>
    );
